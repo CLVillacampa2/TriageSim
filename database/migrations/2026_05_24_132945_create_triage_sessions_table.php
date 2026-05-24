@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations to build the triage_sessions table in MySQL.
+     */
     public function up(): void
     {
         Schema::create('triage_sessions', function (Blueprint $table) {
@@ -21,6 +24,9 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('triage_sessions');

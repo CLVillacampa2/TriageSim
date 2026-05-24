@@ -7,33 +7,44 @@ use Illuminate\Support\Facades\DB;
 
 class TriageController extends Controller
 {
-    // Load the main app and pass the database records to the dashboard
+    /**
+     * Fetch all logs from MySQL and render the main interactive application.
+     */
     public function index()
     {
-        // Fetch all student sessions from the database
-        $studentRecords = DB::table('triage_sessions')->orderBy('created_at', 'desc')->get();
+        // Query database records sorted by most recent first
+        $studentRecords = DB::table('triage_sessions')
+            ->orderBy('created_at', 'desc')
+            ->get();
         
         return view('triagesim', compact('studentRecords'));
     }
 
-    // Save a new completed simulation session via AJAX
+    /**
+     * Receive completed student simulator logs and save them directly to MySQL.
+     */
     public function storeSession(Request $request)
     {
+        // Validate incoming payload parameters
         $validated = $request->validate([
-            'student_id' => 'required|string',
-            'student_name' => 'required|string',
-            'cohort' => 'required|string',
-            'scenario' => 'required|string',
+            'student_id' => 'required|string|max:255',
+            'student_name' => 'required|string|max:255',
+            'cohort' => 'required|string|max:255',
+            'scenario' => 'required|string|max:255',
             'latency' => 'required|numeric',
             'efficiency' => 'required|integer',
             'accuracy' => 'required|integer'
         ]);
 
+        // Securely write records into MySQL database table
         DB::table('triage_sessions')->insert(array_merge($validated, [
             'created_at' => now(),
             'updated_at' => now()
         ]));
 
-        return response()->json(['status' => 'success']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Telemetry record successfully written to database.'
+        ], 200);
     }
 }
