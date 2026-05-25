@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\TriageSession;
 
 class TriageController extends Controller
 {
@@ -13,10 +14,8 @@ class TriageController extends Controller
     public function index()
     {
         // Query database records sorted by most recent first
-        $studentRecords = DB::table('triage_sessions')
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
+        $studentRecords = TriageSession::orderBy('created_at', 'desc')->get();
+
         return view('triagesim', compact('studentRecords'));
     }
 
@@ -36,15 +35,22 @@ class TriageController extends Controller
             'accuracy' => 'required|integer'
         ]);
 
-        // Securely write records into MySQL database table
-        DB::table('triage_sessions')->insert(array_merge($validated, [
-            'created_at' => now(),
-            'updated_at' => now()
-        ]));
+        try {
+            // Use Eloquent model to create record
+            $session = TriageSession::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Telemetry record successfully written to database.'
-        ], 200);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Telemetry record successfully written to database.',
+                'id' => $session->id
+            ], 201);
+        } catch (\Exception $e) {
+            // Log and return a safe error message for clients
+            logger()->error('TriageSession create failed: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to write telemetry record.'
+            ], 500);
+        }
     }
 }
