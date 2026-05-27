@@ -11,19 +11,14 @@ class TriageSession extends Model
 
     protected $table = 'triage_sessions';
 
-    protected $fillable = [
-        'student_id',
-        'student_name',
-        'cohort',
-        'scenario',
-        'latency',
-        'efficiency',
-        'accuracy',
-    ];
+protected $fillable = [
+    'student_id', 'student_name', 'cohort', 'scenario', 
+    'latency', 'efficiency', 'accuracy', 'path_log',
+    'sus_responses', 'sus_score'
+];
 
-    protected $casts = [
-        'latency' => 'float',
-        'efficiency' => 'integer',
-        'accuracy' => 'integer',
-    ];
+protected $casts = [
+    'path_log' => 'array',
+    'sus_responses' => 'array',
+];
 }

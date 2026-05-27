@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Laravel Security Token for Database Saves -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <title>TriageSim - Interactive First Aid and Triage Learning Platform</title>
     
-    <!-- Tailwind CSS for modern layouts, typography and utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -37,7 +35,6 @@
             }
         }
     </script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
@@ -99,7 +96,6 @@
 </head>
 <body class="min-height-screen flex flex-col items-center justify-center p-4 md:p-8">
 
-    <!-- ================= BRAND / HEADER NAVIGATION ================= -->
     <header class="w-full max-w-6xl mb-8 flex items-center justify-between">
         <div class="flex items-center gap-3 cursor-pointer" onclick="showView('homeView')">
             <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white shadow-md shadow-brand-accent/20">
@@ -117,7 +113,6 @@
         </div>
     </header>
 
-    <!-- ================= HELP & PROTOCOL MODAL ================= -->
     <div id="helpModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-lg w-full overflow-hidden shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
             <div class="p-6 bg-gradient-to-r from-brand-teal to-brand-tealDark text-white flex justify-between items-center">
@@ -152,7 +147,6 @@
         </div>
     </div>
 
-    <!-- ================= CUSTOM EXIT CONFIRMATION MODAL ================= -->
     <div id="exitConfirmModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-sm w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
             <h3 class="text-lg font-bold text-brand-dark mb-2 flex items-center gap-2 text-red-500">
@@ -172,46 +166,26 @@
         </div>
     </div>
 
-    <!-- ================= SYSTEM USABILITY SCALE (SUS) MODAL ================= -->
     <div id="susModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-md w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+        <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
             <h3 class="text-lg font-bold text-brand-dark mb-2 flex items-center gap-2 text-brand-teal">
                 <i data-lucide="clipboard-check" class="w-5 h-5"></i> System Usability Scale (SUS)
             </h3>
             <p class="text-xs text-brand-muted mb-4 pb-4 border-b border-brand-bg">
-                Methodology Step 4: Please rate the platform's student-friendliness. (Scale: 1 = Strongly Disagree, 5 = Strongly Agree).
+                Methodology Step 4: Please rate the platform's student-friendliness. (Scale: 1 = Strongly Disagree, 5 = Strongly Agree). You must complete this to submit your session data.
             </p>
-            <div class="space-y-4 mb-6">
-                <div>
-                    <p class="text-sm font-semibold text-brand-dark mb-2">1. I think that I would like to use this system frequently.</p>
-                    <div class="flex justify-between gap-2">
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">1</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">2</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">3</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">4</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded bg-brand-teal text-white transition-colors text-xs">5</button>
-                    </div>
+            
+            <div id="susQuestionsWrapper" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2">
                 </div>
-                <div>
-                    <p class="text-sm font-semibold text-brand-dark mb-2">2. I found the system unnecessarily complex.</p>
-                    <div class="flex justify-between gap-2">
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded bg-brand-teal text-white transition-colors text-xs">1</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">2</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">3</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">4</button>
-                        <button onclick="selectSUS(this)" class="flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs">5</button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="closeSUSModal()" class="w-full py-3 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">
-                    Submit Survey Data
+            
+            <div class="flex gap-3 border-t border-brand-mint pt-4">
+                <button onclick="submitFinalSessionWithSUS()" class="w-full py-3 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">
+                    Submit Survey & Save Data
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- ================= VIEW 1: HOME VIEW ================= -->
     <main id="homeView" class="view-frame active w-full max-w-5xl">
         <div class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-brand-dark mb-4">
@@ -223,8 +197,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <!-- Student Module Card -->
-            <div class="premium-card premium-card-hover p-8 cursor-pointer flex flex-col justify-between" onclick="showView('studentSetupView')">
+            <div class="premium-card premium-card-hover p-8 cursor-pointer flex flex-col justify-between" onclick="showView('consentView')">
                 <div>
                     <div class="w-14 h-14 rounded-2xl bg-brand-mintLight flex items-center justify-center text-brand-teal mb-6">
                         <i data-lucide="play-circle" class="w-8 h-8"></i>
@@ -244,7 +217,6 @@
                 </div>
             </div>
 
-            <!-- Instructor Analytics Card -->
             <div class="premium-card premium-card-hover p-8 cursor-pointer flex flex-col justify-between" onclick="showView('loginView')">
                 <div>
                     <div class="w-14 h-14 rounded-2xl bg-brand-mintLight flex items-center justify-center text-brand-teal mb-6">
@@ -273,7 +245,38 @@
         </div>
     </main>
 
-    <!-- ================= VIEW 1.5: OPTIONAL STUDENT SETUP VIEW ================= -->
+    <main id="consentView" class="view-frame w-full max-w-2xl">
+        <button onclick="showView('homeView')" class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main Menu
+        </button>
+
+        <div class="premium-card p-8 bg-white">
+            <div class="text-center mb-6">
+                <span class="bg-brand-mintLight text-brand-tealDark text-xs font-semibold px-3 py-1 rounded-full uppercase">Student Research Gateway</span>
+                <h2 class="text-2xl font-bold text-brand-dark mt-3">Digital Informed Consent Form</h2>
+            </div>
+            
+            <div class="text-sm text-brand-muted space-y-4 max-h-72 overflow-y-auto p-5 bg-brand-bg rounded-lg border border-brand-mint mb-6">
+                <p class="font-bold text-brand-dark">Project Title: TriageSim Branching-Scenario Simulation Engine</p>
+                <p><strong>Introduction:</strong> You are being invited to participate in an evaluation study tracking the efficacy of non-linear branching engines in medical triage training. Your participation is entirely autonomous and voluntary.</p>
+                <p><strong>Procedure:</strong> If you choose to participate, you will complete simulated emergency triage cases. The system will record background interaction telemetry (decision hesitation times and path choices) to assess performance progression.</p>
+                <p><strong>Data Confidentiality:</strong> All recorded metrics are processed solely for statistical verification. Your identity traits will be decoupled from aggregate research papers.</p>
+                <p><strong>Right to Withdraw:</strong> You maintain the unconditional right to abort or terminate your simulation session at any timeline marker without administrative penalty.</p>
+            </div>
+
+            <div class="flex items-start mb-6 gap-3 p-4 bg-white border border-brand-mint rounded-xl">
+                <input id="consentCheckbox" type="checkbox" onchange="toggleConsent(this)" class="mt-1 w-5 h-5 text-brand-teal bg-gray-100 border-gray-300 rounded focus:ring-brand-teal">
+                <label for="consentCheckbox" class="text-sm text-brand-dark font-medium select-none cursor-pointer">
+                    I explicitly declare that I have read the conditions above and give my full consent to participate in this study.
+                </label>
+            </div>
+
+            <button id="btnAcceptConsent" onclick="acceptConsentForm()" disabled class="w-full py-3.5 px-4 bg-slate-300 text-slate-500 font-bold rounded-xl transition duration-200 cursor-not-allowed">
+                Proceed to Profile Setup
+            </button>
+        </div>
+    </main>
+
     <main id="studentSetupView" class="view-frame w-full max-w-md">
         <button onclick="showView('homeView')" class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main Menu
@@ -328,7 +331,6 @@
         </div>
     </main>
 
-    <!-- ================= VIEW 2: INSTRUCTOR LOGIN VIEW ================= -->
     <main id="loginView" class="view-frame w-full max-w-md">
         <button onclick="showView('homeView')" class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main Menu
@@ -360,7 +362,6 @@
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
 
-                <!-- Accounts Selector / Fast Demo Box -->
                 <div class="p-4 bg-brand-bg border border-brand-mint rounded-xl space-y-2">
                     <span class="block text-xs font-bold text-brand-tealDark uppercase tracking-wider">Demo Access Profiles</span>
                     <div class="text-xs space-y-1 text-brand-dark">
@@ -372,7 +373,6 @@
         </div>
     </main>
 
-    <!-- ================= VIEW 3: STUDENT SIMULATOR VIEW ================= -->
     <main id="studentView" class="view-frame w-full max-w-5xl">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
@@ -388,7 +388,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Left & Main FSM Interactive Case Engine -->
             <div class="lg:col-span-2 space-y-6">
                 <div class="premium-card p-6 bg-white space-y-6">
                     <div class="flex items-center justify-between border-b border-brand-bg pb-4">
@@ -399,7 +398,6 @@
                         <span class="px-3 py-1 bg-brand-mintLight text-brand-tealDark font-bold text-xs rounded-full uppercase tracking-wider">START Protocol</span>
                     </div>
 
-                    <!-- Scenario Patient/Stage Box -->
                     <div class="space-y-4">
                         <span class="text-xs font-bold text-brand-tealDark uppercase tracking-wider block">Clinical Presentation / Prompt</span>
                         <div id="nodePrompt" class="p-5 bg-brand-bg rounded-xl text-brand-dark font-medium border-l-4 border-brand-teal text-base leading-relaxed">
@@ -407,17 +405,14 @@
                         </div>
                     </div>
 
-                    <!-- Scenario Action Interactive Inputs -->
                     <div class="space-y-4">
                         <span class="text-xs font-bold text-brand-tealDark uppercase tracking-wider block">Determine Next Step</span>
                         <div id="optionsWrapper" class="flex flex-col gap-3">
-                            <!-- Dynamic scenario selection buttons are drawn here -->
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Telemetry Panel -->
             <div class="space-y-6">
                 <div class="premium-card p-6 bg-white space-y-5">
                     <h3 class="text-md font-bold text-brand-dark border-b border-brand-bg pb-3 flex items-center gap-2">
@@ -456,9 +451,7 @@
         </div>
     </main>
 
-    <!-- ================= VIEW 4: INSTRUCTOR DASHBOARD VIEW ================= -->
     <main id="dashboardView" class="view-frame w-full max-w-6xl">
-        <!-- Top Custom Brand Nav -->
         <div class="premium-card p-5 bg-white mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-brand-teal rounded-full flex items-center justify-center text-white">
@@ -488,7 +481,6 @@
             <p class="text-sm text-brand-muted">Aggregate analytics computed from branching FSM state logs</p>
         </div>
 
-        <!-- Metrics Cards Grid -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div class="premium-card p-5 bg-white flex flex-col justify-between min-h-[120px]">
                 <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-muted">
@@ -532,7 +524,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            <!-- Left Heatmap & Hesitation Column -->
             <div class="premium-card p-6 bg-white lg:col-span-2 space-y-6">
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600">
@@ -545,11 +536,9 @@
                 </div>
 
                 <div class="space-y-4 pt-2" id="heatmapContainer">
-                    <!-- Dynamic progression heatmap indicators based on node responses -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Right Student Rankings List -->
             <div class="premium-card p-6 bg-white space-y-6">
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center text-yellow-600">
@@ -562,12 +551,10 @@
                 </div>
 
                 <div id="dash-ranking-list" class="space-y-3.5">
-                    <!-- Top ranks rendered on runtime calculation -->
-                </div>
+                    </div>
             </div>
         </div>
 
-        <!-- Individual Student Progress Log Table -->
         <div class="premium-card p-6 bg-white overflow-hidden">
             <div class="flex items-center justify-between border-b border-brand-bg pb-4 mb-4">
                 <div>
@@ -582,22 +569,19 @@
                         <tr class="border-b border-brand-mint text-xs font-bold text-brand-tealDark uppercase bg-brand-bg">
                             <th class="py-3 px-4">Student ID / Name</th>
                             <th class="py-3 px-4 text-center">Cohort</th>
-                            <th class="py-3 px-4 text-center">Scenario Tested</th>
                             <th class="py-3 px-4 text-center">Avg Latency (s)</th>
-                            <th class="py-3 px-4 text-center">Path Efficiency</th>
-                            <th class="py-3 px-4 text-center">Diagnostic Accuracy</th>
+                            <th class="py-3 px-4 text-center">Efficiency</th>
+                            <th class="py-3 px-4 text-center">Accuracy</th>
+                            <th class="py-3 px-4 text-center">SUS Score</th>
                         </tr>
                     </thead>
                     <tbody id="dash-student-table-body" class="divide-y divide-brand-bg">
-                        <!-- Student data records injected instantly -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>
     </main>
 
-    <!-- ================= SCENARIOS & ENGINE CODE DATA ================= -->
-    <!-- Safe Data Island to prevent 'Unexpected token !' SyntaxErrors in Javascript -->
     <script id="laravel-student-data" type="application/json">
         {!! json_encode($studentRecords ?? []) !!}
     </script>
@@ -673,34 +657,40 @@
             }
         };
 
+        // Official 10-item System Usability Scale (SUS) Questions
+        const susQuestions = [
+            "I think that I would like to use this triage system frequently.",
+            "I found the branching simulation engine unnecessarily complex.",
+            "I thought the interface layouts were easy to interact with.",
+            "I think that I would need the support of a technical specialist to use this platform.",
+            "I found the various configuration elements were well integrated.",
+            "I thought there was too much structural inconsistency across the scenarios.",
+            "I imagine that most healthcare peers would learn to use this application rapidly.",
+            "I found the system tracking navigation very cumbersome to execute.",
+            "I felt highly confident navigating between the scenario decision tracks.",
+            "I needed to learn many operational steps before I could execute simulated triage cases."
+        ];
+
         // Safe helper function to parse backend records in pure HTML fallback or Laravel environment
         function getInitialRecords() {
             try {
                 const rawData = document.getElementById('laravel-student-data').textContent.trim();
                 
-                // If it contains Blade tags, we are in a pure HTML preview without a PHP server
                 if (rawData.includes('{!!') || rawData.includes('json_encode') || rawData === '') {
                     return [
-                        { id: "STU2024001", student_id: "STU2024001", student_name: "Sarah Martinez", name: "Sarah Martinez", cohort: "NURS-301-A", scenario: "Scenario A: Mass Casualty", latency: 6.4, efficiency: 95, accuracy: 100 }
+                        { id: "STU2024001", student_id: "STU2024001", student_name: "Sarah Martinez", name: "Sarah Martinez", cohort: "NURS-301-A", scenario: "Scenario A: Mass Casualty", latency: 6.4, efficiency: 95, accuracy: 100, sus_score: 87.5 }
                     ];
                 }
                 return JSON.parse(rawData);
             } catch (e) {
-                console.warn("Laravel data parse failed, loading mocks.");
-                return [
-                    { id: "STU2024001", student_id: "STU2024001", student_name: "Sarah Martinez", name: "Sarah Martinez", cohort: "NURS-301-A", scenario: "Scenario A: Mass Casualty", latency: 6.4, efficiency: 95, accuracy: 100 }
-                ];
+                return [];
             }
         }
 
         // App States & Database Synchronization payload
         const appState = {
             studentRecords: getInitialRecords(),
-            hesitationCount: {
-                node_1: 12,
-                node_2: 21,
-                node_3: 8
-            }
+            hesitationCount: { node_1: 12, node_2: 21, node_3: 8 }
         };
 
         // Session Variables
@@ -708,15 +698,38 @@
         let nodeDisplayTime = 0;
         let latencyTimer = null;
         let deviations = 0;
+        let answerHistory = []; // Tracks the exact path chosen
         let currentSession = {
-            id: "",
-            name: "",
-            cohort: "",
-            scenarioName: "",
-            cumulativeLatency: 0,
-            steps: 0,
-            optimalSteps: 0
+            id: "", name: "", cohort: "", scenarioName: "",
+            cumulativeLatency: 0, steps: 0, optimalSteps: 0,
+            finalLatency: 0, finalEfficiency: 0, finalAccuracy: 0
         };
+
+        // Initialize SUS Modal UI on load
+        function initSUSForm() {
+            const wrapper = document.getElementById('susQuestionsWrapper');
+            wrapper.innerHTML = '';
+            
+            susQuestions.forEach((q, index) => {
+                const qNum = index + 1;
+                wrapper.innerHTML += `
+                    <div class="pt-3 first:pt-0">
+                        <p class="text-sm font-semibold text-brand-dark mb-2"><span class="text-brand-teal">${qNum}.</span> ${q}</p>
+                        <div class="flex justify-between gap-2">
+                            ${[1, 2, 3, 4, 5].map(val => `
+                                <label class="flex-1 text-center cursor-pointer">
+                                    <input type="radio" name="sus_q_${qNum}" value="${val}" class="peer sr-only">
+                                    <div class="py-2 border border-brand-mint rounded peer-checked:bg-brand-teal peer-checked:text-white hover:bg-brand-mintLight transition-colors text-xs text-brand-dark font-medium">
+                                        ${val}
+                                    </div>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        initSUSForm();
 
         // View Transition Handler
         function showView(viewId) {
@@ -724,10 +737,31 @@
                 view.classList.remove('active');
             });
             const activeView = document.getElementById(viewId);
-            if (activeView) {
-                activeView.classList.add('active');
-            }
+            if (activeView) activeView.classList.add('active');
             lucide.createIcons();
+        }
+
+        // --- Day 1 Consent Gateway Logic ---
+        function toggleConsent(checkbox) {
+            const btn = document.getElementById('btnAcceptConsent');
+            if (checkbox.checked) {
+                btn.disabled = false;
+                btn.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+                btn.classList.add('bg-brand-teal', 'text-white', 'hover:bg-brand-tealDark');
+            } else {
+                btn.disabled = true;
+                btn.classList.add('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+                btn.classList.remove('bg-brand-teal', 'text-white', 'hover:bg-brand-tealDark');
+            }
+        }
+
+        function acceptConsentForm() {
+            // Uncheck box for next time
+            document.getElementById('consentCheckbox').checked = false;
+            toggleConsent(document.getElementById('consentCheckbox'));
+            
+            // Proceed to the student profile setup, NOT home!
+            showView('studentSetupView');
         }
 
         // Login authentication simulator
@@ -739,72 +773,40 @@
             }
         }
 
-        // Help Modal toggle
         function toggleHelpModal() {
-            const modal = document.getElementById('helpModal');
-            modal.classList.toggle('hidden');
+            document.getElementById('helpModal').classList.toggle('hidden');
         }
 
-        // Exit simulation custom alert trigger
         function confirmExitSimulation() {
-            const modal = document.getElementById('exitConfirmModal');
-            if (modal) {
-                modal.classList.remove('hidden');
-                lucide.createIcons();
-            }
+            document.getElementById('exitConfirmModal').classList.remove('hidden');
         }
 
-        // Close exit confirmation modal
         function closeExitModal() {
-            const modal = document.getElementById('exitConfirmModal');
-            if (modal) modal.classList.add('hidden');
+            document.getElementById('exitConfirmModal').classList.add('hidden');
         }
 
-        // Handle the final exit callback action
         function executeExitSimulation() {
             if (latencyTimer) clearInterval(latencyTimer);
             closeExitModal();
             showView('homeView');
         }
 
-        // Handle SUS Form Methods
-        function selectSUS(button) {
-            // Highlight selected scale answer
-            const parent = button.parentElement;
-            parent.querySelectorAll('button').forEach(btn => {
-                btn.className = "flex-1 py-2 border border-brand-mint rounded hover:bg-brand-teal hover:text-white transition-colors text-xs";
-            });
-            button.className = "flex-1 py-2 border border-brand-mint rounded bg-brand-teal text-white transition-colors text-xs";
-        }
-
         function openSUSModal() {
-            const modal = document.getElementById('susModal');
-            if (modal) {
-                modal.classList.remove('hidden');
-                lucide.createIcons();
-            }
+            document.getElementById('susModal').classList.remove('hidden');
         }
 
-        function closeSUSModal() {
-            const modal = document.getElementById('susModal');
-            if (modal) {
-                modal.classList.add('hidden');
-                showView('homeView');
-            }
-        }
-
-        // Export Data to CSV for Excel/SPSS Methodology step
+        // Export Data to CSV
         function exportToCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Student ID,Name,Cohort,Scenario,Decision Latency (Seconds),Path Efficiency (%),Accuracy (%)\n";
+            csvContent += "Student ID,Name,Cohort,Scenario,Decision Latency (s),Path Efficiency (%),Accuracy (%),SUS Score\n";
             
             appState.studentRecords.forEach(function(r) {
-                // Support both PHP models and fallback state values
-                let id = r.student_id ? r.student_id : r.id;
-                let name = r.student_name ? r.student_name : r.name;
+                let id = r.student_id ? r.student_id : (r.id ? r.id : 'N/A');
+                let name = r.student_name ? r.student_name : (r.name ? r.name : 'Unknown');
                 let scenario = r.scenario ? r.scenario : 'Scenario A';
+                let sus = r.sus_score ? r.sus_score : 'N/A';
                 
-                let row = `${id},"${name}","${r.cohort}","${scenario}",${r.latency},${r.efficiency},${r.accuracy}`;
+                let row = `${id},"${name}","${r.cohort}","${scenario}",${r.latency},${r.efficiency},${r.accuracy},${sus}`;
                 csvContent += row + "\n";
             });
 
@@ -817,19 +819,17 @@
             document.body.removeChild(link);
         }
 
-        // Initialize Student Mode Session using optional setups
+        // Initialize Student Mode Session
         function startStudentMode() {
-            // Retrieve chosen scenario from form (Defaults to START_NODE)
             const scenarioSelect = document.getElementById('studentInputScenario');
             currentState = scenarioSelect ? scenarioSelect.value : 'START_NODE';
             
-            // Extract the readable text (e.g. "Scenario A: Mass Casualty")
             const fullScenarioText = scenarioSelect ? scenarioSelect.options[scenarioSelect.selectedIndex].text : "Scenario A: Mass Casualty";
             const shortScenarioTitle = fullScenarioText.split(' (')[0]; 
             
             deviations = 0;
+            answerHistory = []; // Reset path log for new session
 
-            // Optional Inputs retrieval
             const inputName = document.getElementById('studentInputName').value.trim();
             const inputId = document.getElementById('studentInputId').value.trim();
             const inputCohort = document.getElementById('studentInputCohort').value;
@@ -839,22 +839,49 @@
                 name: inputName || "Live Participant " + Math.floor(10 + Math.random() * 89),
                 cohort: inputCohort || "NURS-301-A",
                 scenarioName: shortScenarioTitle,
-                cumulativeLatency: 0,
-                steps: 0,
-                optimalSteps: 0
+                cumulativeLatency: 0, steps: 0, optimalSteps: 0,
+                finalLatency: 0, finalEfficiency: 0, finalAccuracy: 0
             };
 
-            // Set Telemetry & UI Headers
             document.getElementById('telemetryName').innerText = currentSession.name;
             document.getElementById('scenarioTitle').innerText = `Active Case: ${currentSession.scenarioName}`;
             document.getElementById('telemetryEfficiency').innerText = "100%";
             document.getElementById('telemetryDeviations').innerText = "0";
 
-            // Reset setup input values for next session
             document.getElementById('studentInputName').value = '';
             document.getElementById('studentInputId').value = '';
 
+            // Uncheck SUS radios for new session
+            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+
             showView('studentView');
+            renderFSMNode();
+        }
+
+        // Process step transition logic & accumulate metrics (WITH PATH LOGGING)
+        function selectOption(nextStateID, isOptimal, answerText) {
+            let latencyElapsed = parseFloat(((Date.now() - nodeDisplayTime) / 1000).toFixed(2));
+            currentSession.cumulativeLatency += latencyElapsed;
+            currentSession.steps++;
+
+            // Path Logging!
+            answerHistory.push({
+                state: currentState,
+                answer_chosen: answerText,
+                was_correct: isOptimal,
+                time_spent: latencyElapsed + 's'
+            });
+
+            if (isOptimal) {
+                currentSession.optimalSteps++;
+            } else {
+                deviations++;
+                document.getElementById('telemetryDeviations').innerText = deviations;
+                let currentEff = Math.max(100 - (deviations * 35), 15);
+                document.getElementById('telemetryEfficiency').innerText = currentEff + '%';
+            }
+
+            currentState = nextStateID;
             renderFSMNode();
         }
 
@@ -867,7 +894,6 @@
             const optionsWrapper = document.getElementById('optionsWrapper');
             optionsWrapper.innerHTML = '';
 
-            // Set up timers and tracking
             nodeDisplayTime = Date.now();
             if (latencyTimer) clearInterval(latencyTimer);
 
@@ -881,63 +907,24 @@
                 clearInterval(latencyTimer);
                 document.getElementById('telemetryLatency').innerText = "Stopped";
 
-                let finalLatency = parseFloat(currentSession.cumulativeLatency.toFixed(1));
-                let finalEfficiency = Math.max(100 - (deviations * 35), 15);
-                let finalAccuracy = Math.round((currentSession.optimalSteps / currentSession.steps) * 100) || 0;
-
-                const payload = {
-                    student_id: currentSession.id,
-                    student_name: currentSession.name,
-                    cohort: currentSession.cohort,
-                    scenario: currentSession.scenarioName,
-                    latency: finalLatency === 0 ? 4.5 : finalLatency,
-                    efficiency: finalEfficiency,
-                    accuracy: finalAccuracy
-                };
-
-                // LARAVEL AJAX SECURE PERSISTENCE
-                const csrfMeta = document.querySelector('meta[name="csrf-token"]');
-                if (csrfMeta && csrfMeta.getAttribute('content')) {
-                    fetch('/api/sessions', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfMeta.getAttribute('content')
-                        },
-                        body: JSON.stringify(payload)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Inject local data structure for instant dashboard listing
-                        appState.studentRecords.push(payload);
-                        refreshDashboard();
-                    })
-                    .catch(err => console.error("Database connection exception: ", err));
-                } else {
-                    // Safe local mode fallback for pure HTML runtime environments
-                    appState.studentRecords.push(payload);
-                    refreshDashboard();
-                }
+                // Save final metrics to the session object
+                currentSession.finalLatency = parseFloat(currentSession.cumulativeLatency.toFixed(1));
+                currentSession.finalEfficiency = Math.max(100 - (deviations * 35), 15);
+                currentSession.finalAccuracy = Math.round((currentSession.optimalSteps / currentSession.steps) * 100) || 0;
 
                 // Update hesitation stats to simulate dynamic heatmap shift
-                if (deviations > 0) {
-                    appState.hesitationCount.node_2 += 5;
-                } else {
-                    appState.hesitationCount.node_1 += 2;
-                }
+                if (deviations > 0) appState.hesitationCount.node_2 += 5;
+                else appState.hesitationCount.node_1 += 2;
 
-                // Draw Terminal Results Box
+                // Draw Terminal Results Box - User MUST click SUS Survey to submit
                 optionsWrapper.innerHTML = `
                     <div class="p-6 rounded-xl ${nodeData.tagColor} ${nodeData.textColor} shadow-lg text-center space-y-4 animate-pulse">
                         <span class="text-xs uppercase font-extrabold tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block">Final Decision Classification</span>
                         <h4 class="text-2xl font-black">${nodeData.tagName}</h4>
                     </div>
                     <div class="flex gap-4 pt-4">
-                        <button onclick="openSUSModal()" class="flex-1 py-3 px-4 bg-brand-teal hover:bg-brand-tealDark text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center gap-2">
-                            <i data-lucide="clipboard-check" class="w-4 h-4"></i> Complete SUS Survey
-                        </button>
-                        <button onclick="showView('homeView')" class="flex-1 py-3 px-4 bg-white border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-mintLight transition-colors">
-                            Return Home
+                        <button onclick="openSUSModal()" class="w-full py-3 px-4 bg-brand-teal hover:bg-brand-tealDark text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="clipboard-check" class="w-5 h-5"></i> Complete SUS Survey to Submit Session
                         </button>
                     </div>
                 `;
@@ -945,7 +932,7 @@
                 return;
             }
 
-            // Draw selection options with routing maps
+            // Draw selection options
             nodeData.options.forEach(opt => {
                 const button = document.createElement('button');
                 button.className = "w-full text-left p-4 bg-white border-2 border-brand-mint hover:border-brand-teal rounded-xl text-brand-dark font-medium hover:bg-brand-mintLight transition-all flex justify-between items-center group";
@@ -953,29 +940,79 @@
                     <span>${opt.text}</span>
                     <i data-lucide="chevron-right" class="w-4 h-4 text-brand-teal opacity-0 group-hover:opacity-100 transition-all"></i>
                 `;
-                button.onclick = () => selectOption(opt.nextState, opt.optimal);
+                button.onclick = () => selectOption(opt.nextState, opt.optimal, opt.text);
                 optionsWrapper.appendChild(button);
             });
             lucide.createIcons();
         }
 
-        // Process step transition logic & accumulate metrics
-        function selectOption(nextStateID, isOptimal) {
-            let latencyElapsed = parseFloat(((Date.now() - nodeDisplayTime) / 1000).toFixed(2));
-            currentSession.cumulativeLatency += latencyElapsed;
-            currentSession.steps++;
-
-            if (isOptimal) {
-                currentSession.optimalSteps++;
-            } else {
-                deviations++;
-                document.getElementById('telemetryDeviations').innerText = deviations;
-                let currentEff = Math.max(100 - (deviations * 35), 15);
-                document.getElementById('telemetryEfficiency').innerText = currentEff + '%';
+        // --- Day 2 Post-Simulation Validation & DB Sync ---
+        function submitFinalSessionWithSUS() {
+            let answers = {};
+            let allAnswered = true;
+            
+            // Validate that all 10 responses have been selected
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="sus_q_${i}"]:checked`);
+                if (!selected) {
+                    allAnswered = false;
+                    break;
+                }
+                answers[`q${i}`] = parseInt(selected.value);
             }
+            
+            if (!allAnswered) {
+                alert("Research Requirement: Please answer all 10 System Usability Scale questions before submitting your data.");
+                return;
+            }
+            
+            // Official Psychometric Scoring Algorithm (Brooke, 1996)
+            let oddSum = (answers.q1 - 1) + (answers.q3 - 1) + (answers.q5 - 1) + (answers.q7 - 1) + (answers.q9 - 1);
+            let evenSum = (5 - answers.q2) + (5 - answers.q4) + (5 - answers.q6) + (5 - answers.q8) + (5 - answers.q10);
+            let finalSUSMultiplierScore = (oddSum + evenSum) * 2.5;
 
-            currentState = nextStateID;
-            renderFSMNode();
+            // Final Payload
+            const payload = {
+                student_id: currentSession.id,
+                student_name: currentSession.name,
+                cohort: currentSession.cohort,
+                scenario: currentSession.scenarioName,
+                latency: currentSession.finalLatency === 0 ? 4.5 : currentSession.finalLatency,
+                efficiency: currentSession.finalEfficiency,
+                accuracy: currentSession.finalAccuracy,
+                path_log: JSON.stringify(answerHistory), // Included!
+                sus_responses: JSON.stringify(answers),  // Included!
+                sus_score: finalSUSMultiplierScore       // Included!
+            };
+
+            // LARAVEL AJAX SECURE PERSISTENCE
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            if (csrfMeta && csrfMeta.getAttribute('content')) {
+                fetch('/api/sessions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfMeta.getAttribute('content')
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    appState.studentRecords.push(payload);
+                    refreshDashboard();
+                    alert(`Data Saved!\nYour SUS Score: ${finalSUSMultiplierScore}`);
+                    document.getElementById('susModal').classList.add('hidden');
+                    showView('homeView');
+                })
+                .catch(err => console.error("Database connection exception: ", err));
+            } else {
+                // Local mode fallback
+                appState.studentRecords.push(payload);
+                refreshDashboard();
+                alert(`Data Saved Locally!\nYour SUS Score: ${finalSUSMultiplierScore}`);
+                document.getElementById('susModal').classList.add('hidden');
+                showView('homeView');
+            }
         }
 
         // Recompute Dashboard Metrics & Render lists/tables
@@ -1000,22 +1037,20 @@
             document.getElementById('dash-avg-efficiency').innerHTML = `<span class="px-2 py-0.5 bg-brand-bg rounded-lg text-brand-accent">${avgEff}%</span>`;
             document.getElementById('dash-avg-accuracy').innerText = avgAcc + '%';
 
-            // Check if standard decision latency baseline is exceeded for color alert styling
             if (parseFloat(avgLat) <= 6.0) {
                 document.getElementById('dash-avg-latency').className = "text-3xl font-black text-brand-accent leading-tight mt-2";
             } else {
                 document.getElementById('dash-avg-latency').className = "text-3xl font-black text-red-500 leading-tight mt-2";
             }
 
-            // Sync Table Records
             const tbody = document.getElementById('dash-student-table-body');
             tbody.innerHTML = '';
             [...records].reverse().forEach(r => {
-                // Shorten the scenario name slightly so it fits beautifully in the dashboard
                 const name = r.student_name ? r.student_name : r.name;
                 const id = r.student_id ? r.student_id : r.id;
                 const scenario = r.scenario ? r.scenario : 'Scenario A';
                 const shortScenario = scenario.split(':')[0]; 
+                const susDisplay = r.sus_score ? r.sus_score : 'N/A';
                 
                 tbody.innerHTML += `
                     <tr class="hover:bg-brand-bg/40 transition-colors">
@@ -1025,14 +1060,14 @@
                         </td>
                         <td class="py-4 px-4 text-center font-semibold text-sm text-brand-muted">${r.cohort}</td>
                         <td class="py-4 px-4 text-center font-semibold text-xs text-brand-tealDeep"><span class="bg-brand-mintLight px-2 py-1 rounded-md">${shortScenario}</span></td>
-                        <td class="py-4 px-4 text-center font-bold text-sm ${r.latency <= 5.5 ? 'text-brand-accent' : 'text-red-500'}">${r.latency}s</td>
-                        <td class="py-4 px-4 text-center font-bold text-sm ${r.efficiency >= 80 ? 'text-brand-accent' : 'text-yellow-600'}">${r.efficiency}%</td>
-                        <td class="py-4 px-4 text-center font-bold text-sm ${r.accuracy >= 80 ? 'text-brand-teal' : 'text-red-500'}">${r.accuracy}%</td>
+                        <td class="py-4 px-4 text-center font-bold text-sm ${parseFloat(r.latency) <= 5.5 ? 'text-brand-accent' : 'text-red-500'}">${r.latency}s</td>
+                        <td class="py-4 px-4 text-center font-bold text-sm ${parseInt(r.efficiency) >= 80 ? 'text-brand-accent' : 'text-yellow-600'}">${r.efficiency}%</td>
+                        <td class="py-4 px-4 text-center font-bold text-sm ${parseInt(r.accuracy) >= 80 ? 'text-brand-teal' : 'text-red-500'}">${r.accuracy}%</td>
+                        <td class="py-4 px-4 text-center font-bold text-sm text-brand-tealDark">${susDisplay}</td>
                     </tr>
                 `;
             });
 
-            // Sync Leaderboard Ranking List (Sorted by higher efficiency and faster latency)
             const sorted = [...records].sort((a, b) => {
                 if (b.efficiency !== a.efficiency) return b.efficiency - a.efficiency;
                 return a.latency - b.latency;
@@ -1100,7 +1135,6 @@
             lucide.createIcons();
         }
 
-        // Auto-run dashboard update & initialize icons on boot
         window.onload = function() {
             refreshDashboard();
             lucide.createIcons();
