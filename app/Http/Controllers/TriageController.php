@@ -24,19 +24,22 @@ class TriageController extends Controller
      */
     public function storeSession(Request $request)
     {
-        // Validate incoming payload parameters
+        // Validate all incoming payload parameters sent by the JavaScript fetch blocks
         $validated = $request->validate([
-            'student_id' => 'required|string|max:255',
-            'student_name' => 'required|string|max:255',
-            'cohort' => 'required|string|max:255',
-            'scenario' => 'required|string|max:255',
-            'latency' => 'required|numeric',
-            'efficiency' => 'required|integer',
-            'accuracy' => 'required|integer'
+            'student_id'    => 'required|string|max:255',
+            'student_name'  => 'required|string|max:255',
+            'cohort'        => 'required|string|max:255',
+            'scenario'      => 'required|string|max:255',
+            'latency'       => 'required|numeric',
+            'efficiency'    => 'required|integer',
+            'accuracy'      => 'required|integer',
+            'path_log'      => 'nullable|string',  // Added to persist historical FSM steps
+            'sus_responses' => 'nullable|string',  // Added to persist raw question ratings 
+            'sus_score'     => 'required|numeric'  // Added so instructor table reads it perfectly
         ]);
 
         try {
-            // Use Eloquent model to create record
+            // Use Eloquent model to create record permanently
             $session = TriageSession::create($validated);
 
             return response()->json([

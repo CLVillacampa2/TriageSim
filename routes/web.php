@@ -22,4 +22,5 @@ Route::get('/test-db', function () {
     } catch (\Exception $e) {
         return "FAILED TO CONNECT. Error: " . $e->getMessage();
     }
+    
 });

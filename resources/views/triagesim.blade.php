@@ -166,6 +166,28 @@
         </div>
     </div>
 
+    <div id="resultModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+            <div class="flex items-center gap-2 text-brand-teal mb-2">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+                <h3 class="text-lg font-bold text-brand-dark">Case Evaluation &amp; Path Review</h3>
+            </div>
+            <p class="text-xs text-brand-muted mb-4 pb-4 border-b border-brand-bg">
+                Review your path results, errors made, and correct alternative parameters prior to completing the study survey.
+            </p>
+            
+            <div id="resultModalContent" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2">
+                </div>
+            
+            <div class="flex gap-3 border-t border-brand-mint pt-4">
+                <button onclick="closeResultAndOpenSUS()" class="w-full py-3.5 px-4 bg-brand-teal hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-teal/10">
+                    <span>Proceed to Usability Survey (SUS)</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div id="susModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
             <h3 class="text-lg font-bold text-brand-dark mb-2 flex items-center gap-2 text-brand-teal">
@@ -517,7 +539,7 @@
                     <i data-lucide="shield" class="w-4 h-4 text-brand-teal"></i> Diagnostic Accuracy
                 </div>
                 <div>
-                    <div id="dash-avg-accuracy" class="text-3xl font-black text-brand-dark leading-tight mt-2 text-brand-teal font-sans">0%</div>
+                    <div id="dash-avg-accuracy" class="text-3xl font-black text-brand-dark leading-tight mt-2 text-brand-teal">0%</div>
                     <span class="text-[11px] text-brand-muted font-medium">Optimal first-try accuracy</span>
                 </div>
             </div>
@@ -534,9 +556,7 @@
                         <p class="text-xs text-brand-muted">Tracks hesitation metrics and cognitive friction points</p>
                     </div>
                 </div>
-
-                <div class="space-y-4 pt-2" id="heatmapContainer">
-                    </div>
+                <div class="space-y-4 pt-2" id="heatmapContainer"></div>
             </div>
 
             <div class="premium-card p-6 bg-white space-y-6">
@@ -549,9 +569,7 @@
                         <p class="text-xs text-brand-muted">Sort of top paths (Efficiency &amp; Speed)</p>
                     </div>
                 </div>
-
-                <div id="dash-ranking-list" class="space-y-3.5">
-                    </div>
+                <div id="dash-ranking-list" class="space-y-3.5"></div>
             </div>
         </div>
 
@@ -568,15 +586,15 @@
                     <thead>
                         <tr class="border-b border-brand-mint text-xs font-bold text-brand-tealDark uppercase bg-brand-bg">
                             <th class="py-3 px-4">Student ID / Name</th>
-                            <th class="py-3 px-4 text-center">Cohort</th>
+                            <th class="py-3 px-4 text-center">Date Taken</th>
+                            <th class="py-3 px-4 text-center">Scenario</th>
                             <th class="py-3 px-4 text-center">Avg Latency (s)</th>
                             <th class="py-3 px-4 text-center">Efficiency</th>
                             <th class="py-3 px-4 text-center">Accuracy</th>
                             <th class="py-3 px-4 text-center">SUS Score</th>
                         </tr>
                     </thead>
-                    <tbody id="dash-student-table-body" class="divide-y divide-brand-bg">
-                        </tbody>
+                    <tbody id="dash-student-table-body" class="divide-y divide-brand-bg"></tbody>
                 </table>
             </div>
         </div>
@@ -631,7 +649,7 @@
                 tagColor: "bg-triage-yellow",
                 textColor: "text-yellow-900",
                 tagName: "Delayed (Yellow Tag)",
-                prompt: "Assessment Complete: However, your classification is incorrect. A patient showing respiratory rate >30/min, poor perfusion, or mental confusion cannot be tagged yellow. They require an immediate RED tag."
+                prompt: "Assessment Complete: However, your final classification is sub-optimal. A patient showing respiratory rate >30/min, poor perfusion, or mental confusion cannot be tagged yellow. They require an immediate RED tag."
             },
             SCENARIO_B_START: {
                 prompt: "Emergency Triage Area (Scenario B): A structural fire has occurred. A patient approaches you walking, coughing slightly, complaining of a burned arm. What is the immediate START protocol action?",
@@ -646,18 +664,17 @@
                 tagColor: "bg-triage-green",
                 textColor: "text-green-100",
                 tagName: "Minor (Green Tag)",
-                prompt: "Assessment Complete: By confirming the patient can walk, START protocol dictates immediate classification as MINOR. They are grouped into the 'walking wounded' before further respiratory checks."
+                prompt: "Assessment Complete: By confirming the patient can walk, START protocol dictates immediate classification as MINOR. They are grouped into the 'walking wounded' before further checks."
             },
             SCENARIO_B_WRONG: {
                 isTerminal: true,
-                tagColor: "bg-triage-yellow",
-                textColor: "text-yellow-900",
-                tagName: "Delayed (Incorrect Flow)",
-                prompt: "Assessment Complete: Incorrect protocol execution. In START triage, if a patient is ambulatory (able to walk), they are immediately tagged GREEN without proceeding down the RPM (Respirations, Perfusion, Mental Status) checklist."
+                tagColor: "bg-triage-black",
+                textColor: "text-red-200",
+                tagName: "Incorrect Flow Logic",
+                prompt: "Assessment Complete: Protocol breakdown. In START triage, if a patient is ambulatory (able to walk), they are immediately tagged GREEN without proceeding down the RPM checklist."
             }
         };
 
-        // Official 10-item System Usability Scale (SUS) Questions
         const susQuestions = [
             "I think that I would like to use this triage system frequently.",
             "I found the branching simulation engine unnecessarily complex.",
@@ -671,15 +688,11 @@
             "I needed to learn many operational steps before I could execute simulated triage cases."
         ];
 
-        // Safe helper function to parse backend records in pure HTML fallback or Laravel environment
         function getInitialRecords() {
             try {
                 const rawData = document.getElementById('laravel-student-data').textContent.trim();
-                
                 if (rawData.includes('{!!') || rawData.includes('json_encode') || rawData === '') {
-                    return [
-                        { id: "STU2024001", student_id: "STU2024001", student_name: "Sarah Martinez", name: "Sarah Martinez", cohort: "NURS-301-A", scenario: "Scenario A: Mass Casualty", latency: 6.4, efficiency: 95, accuracy: 100, sus_score: 87.5 }
-                    ];
+                    return [];
                 }
                 return JSON.parse(rawData);
             } catch (e) {
@@ -687,29 +700,21 @@
             }
         }
 
-        // App States & Database Synchronization payload
         const appState = {
             studentRecords: getInitialRecords(),
             hesitationCount: { node_1: 12, node_2: 21, node_3: 8 }
         };
 
-        // Session Variables
         let currentState = 'START_NODE';
         let nodeDisplayTime = 0;
         let latencyTimer = null;
         let deviations = 0;
-        let answerHistory = []; // Tracks the exact path chosen
-        let currentSession = {
-            id: "", name: "", cohort: "", scenarioName: "",
-            cumulativeLatency: 0, steps: 0, optimalSteps: 0,
-            finalLatency: 0, finalEfficiency: 0, finalAccuracy: 0
-        };
+        let answerHistory = []; 
+        let currentSession = {};
 
-        // Initialize SUS Modal UI on load
         function initSUSForm() {
             const wrapper = document.getElementById('susQuestionsWrapper');
             wrapper.innerHTML = '';
-            
             susQuestions.forEach((q, index) => {
                 const qNum = index + 1;
                 wrapper.innerHTML += `
@@ -731,17 +736,13 @@
         }
         initSUSForm();
 
-        // View Transition Handler
         function showView(viewId) {
-            document.querySelectorAll('.view-frame').forEach(view => {
-                view.classList.remove('active');
-            });
+            document.querySelectorAll('.view-frame').forEach(view => view.classList.remove('active'));
             const activeView = document.getElementById(viewId);
             if (activeView) activeView.classList.add('active');
             lucide.createIcons();
         }
 
-        // --- Day 1 Consent Gateway Logic ---
         function toggleConsent(checkbox) {
             const btn = document.getElementById('btnAcceptConsent');
             if (checkbox.checked) {
@@ -756,15 +757,11 @@
         }
 
         function acceptConsentForm() {
-            // Uncheck box for next time
             document.getElementById('consentCheckbox').checked = false;
             toggleConsent(document.getElementById('consentCheckbox'));
-            
-            // Proceed to the student profile setup, NOT home!
             showView('studentSetupView');
         }
 
-        // Login authentication simulator
         function executeLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             if (email) {
@@ -795,40 +792,53 @@
             document.getElementById('susModal').classList.remove('hidden');
         }
 
-        // Export Data to CSV
+        function closeResultAndOpenSUS() {
+            document.getElementById('resultModal').classList.add('hidden');
+            openSUSModal();
+        }
+
         function exportToCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Student ID,Name,Cohort,Scenario,Decision Latency (s),Path Efficiency (%),Accuracy (%),SUS Score\n";
+            // Updated CSV headers to include individual questions and date
+            csvContent += "Date Taken,Student ID,Name,Cohort,Scenario,Decision Latency (s),Path Efficiency (%),Accuracy (%),SUS Final Score,SUS Q1,SUS Q2,SUS Q3,SUS Q4,SUS Q5,SUS Q6,SUS Q7,SUS Q8,SUS Q9,SUS Q10\n";
             
-            appState.studentRecords.forEach(function(r) {
-                let id = r.student_id ? r.student_id : (r.id ? r.id : 'N/A');
-                let name = r.student_name ? r.student_name : (r.name ? r.name : 'Unknown');
-                let scenario = r.scenario ? r.scenario : 'Scenario A';
-                let sus = r.sus_score ? r.sus_score : 'N/A';
+            appState.studentRecords.forEach(r => {
+                let dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString() : new Date().toLocaleDateString();
+                let id = r.student_id || r.id || 'N/A';
+                let name = r.student_name || r.name || 'Unknown';
+                let scenario = r.scenario || 'Scenario A';
+                let sus = r.sus_score || 'N/A';
                 
-                let row = `${id},"${name}","${r.cohort}","${scenario}",${r.latency},${r.efficiency},${r.accuracy},${sus}`;
+                // Parse survey responses securely
+                let qResponses = Array(10).fill('N/A');
+                if (r.sus_responses) {
+                    try {
+                        let parsed = typeof r.sus_responses === 'string' ? JSON.parse(r.sus_responses) : r.sus_responses;
+                        for(let i=1; i<=10; i++) {
+                            qResponses[i-1] = parsed[`q${i}`] || 'N/A';
+                        }
+                    } catch(e) {}
+                }
+                
+                let row = `${dateStr},${id},"${name}","${r.cohort}","${scenario}",${r.latency},${r.efficiency},${r.accuracy},${sus},${qResponses.join(',')}`;
                 csvContent += row + "\n";
             });
-
-            var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
+            link.setAttribute("href", encodeURI(csvContent));
             link.setAttribute("download", "TriageSim_Methodology_Export.csv");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        // Initialize Student Mode Session
         function startStudentMode() {
             const scenarioSelect = document.getElementById('studentInputScenario');
             currentState = scenarioSelect ? scenarioSelect.value : 'START_NODE';
-            
             const fullScenarioText = scenarioSelect ? scenarioSelect.options[scenarioSelect.selectedIndex].text : "Scenario A: Mass Casualty";
             const shortScenarioTitle = fullScenarioText.split(' (')[0]; 
             
             deviations = 0;
-            answerHistory = []; // Reset path log for new session
+            answerHistory = []; 
 
             const inputName = document.getElementById('studentInputName').value.trim();
             const inputId = document.getElementById('studentInputId').value.trim();
@@ -850,21 +860,17 @@
 
             document.getElementById('studentInputName').value = '';
             document.getElementById('studentInputId').value = '';
-
-            // Uncheck SUS radios for new session
             document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
 
             showView('studentView');
             renderFSMNode();
         }
 
-        // Process step transition logic & accumulate metrics (WITH PATH LOGGING)
         function selectOption(nextStateID, isOptimal, answerText) {
             let latencyElapsed = parseFloat(((Date.now() - nodeDisplayTime) / 1000).toFixed(2));
             currentSession.cumulativeLatency += latencyElapsed;
             currentSession.steps++;
 
-            // Path Logging!
             answerHistory.push({
                 state: currentState,
                 answer_chosen: answerText,
@@ -885,7 +891,6 @@
             renderFSMNode();
         }
 
-        // Render current FSM Node Prompt & Option Selection
         function renderFSMNode() {
             const nodeData = triageFSM[currentState];
             document.getElementById('telemetryState').innerText = currentState;
@@ -902,29 +907,57 @@
                 document.getElementById('telemetryLatency').innerText = timeElapsed + 's';
             }, 60);
 
-            // Check if terminal/result node
             if (nodeData.isTerminal) {
                 clearInterval(latencyTimer);
                 document.getElementById('telemetryLatency').innerText = "Stopped";
 
-                // Save final metrics to the session object
                 currentSession.finalLatency = parseFloat(currentSession.cumulativeLatency.toFixed(1));
                 currentSession.finalEfficiency = Math.max(100 - (deviations * 35), 15);
                 currentSession.finalAccuracy = Math.round((currentSession.optimalSteps / currentSession.steps) * 100) || 0;
 
-                // Update hesitation stats to simulate dynamic heatmap shift
                 if (deviations > 0) appState.hesitationCount.node_2 += 5;
                 else appState.hesitationCount.node_1 += 2;
 
-                // Draw Terminal Results Box - User MUST click SUS Survey to submit
-                optionsWrapper.innerHTML = `
-                    <div class="p-6 rounded-xl ${nodeData.tagColor} ${nodeData.textColor} shadow-lg text-center space-y-4 animate-pulse">
-                        <span class="text-xs uppercase font-extrabold tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block">Final Decision Classification</span>
-                        <h4 class="text-2xl font-black">${nodeData.tagName}</h4>
+                let modalHtml = `
+                    <div class="p-5 rounded-xl ${nodeData.tagColor} ${nodeData.textColor} shadow-lg text-center space-y-1 mb-4">
+                        <span class="text-[10px] uppercase font-extrabold tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full inline-block">Final Decision Classification</span>
+                        <h4 class="text-xl font-black">${nodeData.tagName}</h4>
                     </div>
-                    <div class="flex gap-4 pt-4">
-                        <button onclick="openSUSModal()" class="w-full py-3 px-4 bg-brand-teal hover:bg-brand-tealDark text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center gap-2">
-                            <i data-lucide="clipboard-check" class="w-5 h-5"></i> Complete SUS Survey to Submit Session
+                    <div class="space-y-3">
+                `;
+
+                answerHistory.forEach((step, idx) => {
+                    const originalQuestion = triageFSM[step.state];
+                    const rightOption = originalQuestion.options ? originalQuestion.options.find(o => o.optimal === true) : null;
+                    const rightAnswerText = rightOption ? rightOption.text : "Protocol Specific Action";
+
+                    modalHtml += `
+                        <div class="p-3.5 bg-brand-bg border-2 ${step.was_correct ? 'border-brand-accent/20' : 'border-red-100'} rounded-xl text-xs space-y-1.5">
+                            <p class="font-bold text-brand-dark leading-normal">
+                                Question ${idx + 1}: <span class="font-normal text-brand-muted">${originalQuestion.prompt}</span>
+                            </p>
+                            <p class="font-semibold ${step.was_correct ? 'text-brand-accent bg-emerald-50/60' : 'text-red-500 bg-red-50/60'} px-2 py-1 rounded inline-block">
+                                Your Choice: "${step.answer_chosen}" ${step.was_correct ? '✓ (Correct)' : '✗ (Mistake)'}
+                            </p>
+                            ${!step.was_correct ? `
+                                <p class="text-brand-tealDark font-bold bg-brand-mintLight px-2 py-1 rounded">
+                                    → Right Answer: "${rightAnswerText}"
+                                </p>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                modalHtml += `</div>`;
+
+                document.getElementById('resultModalContent').innerHTML = modalHtml;
+                document.getElementById('resultModal').classList.remove('hidden');
+
+                optionsWrapper.innerHTML = `
+                    <div class="p-4 bg-brand-bg text-center rounded-xl border border-brand-mint border-dashed">
+                        <p class="text-sm font-semibold text-brand-tealDark">Scenario Session Completed</p>
+                        <button onclick="document.getElementById('resultModal').classList.remove('hidden')" class="mt-2 text-xs font-bold text-brand-teal hover:underline flex items-center justify-center gap-1 mx-auto">
+                            <i data-lucide="eye" class="w-3.5 h-3.5"></i> Re-open Evaluation Modal
                         </button>
                     </div>
                 `;
@@ -932,7 +965,6 @@
                 return;
             }
 
-            // Draw selection options
             nodeData.options.forEach(opt => {
                 const button = document.createElement('button');
                 button.className = "w-full text-left p-4 bg-white border-2 border-brand-mint hover:border-brand-teal rounded-xl text-brand-dark font-medium hover:bg-brand-mintLight transition-all flex justify-between items-center group";
@@ -946,12 +978,10 @@
             lucide.createIcons();
         }
 
-        // --- Day 2 Post-Simulation Validation & DB Sync ---
         function submitFinalSessionWithSUS() {
             let answers = {};
             let allAnswered = true;
             
-            // Validate that all 10 responses have been selected
             for (let i = 1; i <= 10; i++) {
                 const selected = document.querySelector(`input[name="sus_q_${i}"]:checked`);
                 if (!selected) {
@@ -966,12 +996,10 @@
                 return;
             }
             
-            // Official Psychometric Scoring Algorithm (Brooke, 1996)
             let oddSum = (answers.q1 - 1) + (answers.q3 - 1) + (answers.q5 - 1) + (answers.q7 - 1) + (answers.q9 - 1);
             let evenSum = (5 - answers.q2) + (5 - answers.q4) + (5 - answers.q6) + (5 - answers.q8) + (5 - answers.q10);
             let finalSUSMultiplierScore = (oddSum + evenSum) * 2.5;
 
-            // Final Payload
             const payload = {
                 student_id: currentSession.id,
                 student_name: currentSession.name,
@@ -980,12 +1008,12 @@
                 latency: currentSession.finalLatency === 0 ? 4.5 : currentSession.finalLatency,
                 efficiency: currentSession.finalEfficiency,
                 accuracy: currentSession.finalAccuracy,
-                path_log: JSON.stringify(answerHistory), // Included!
-                sus_responses: JSON.stringify(answers),  // Included!
-                sus_score: finalSUSMultiplierScore       // Included!
+                path_log: JSON.stringify(answerHistory), 
+                sus_responses: JSON.stringify(answers),  
+                sus_score: finalSUSMultiplierScore,
+                created_at: new Date().toISOString() // Fallback timestamp for local UI
             };
 
-            // LARAVEL AJAX SECURE PERSISTENCE
             const csrfMeta = document.querySelector('meta[name="csrf-token"]');
             if (csrfMeta && csrfMeta.getAttribute('content')) {
                 fetch('/api/sessions', {
@@ -1004,9 +1032,8 @@
                     document.getElementById('susModal').classList.add('hidden');
                     showView('homeView');
                 })
-                .catch(err => console.error("Database connection exception: ", err));
+                .catch(err => console.error("Database sync exception: ", err));
             } else {
-                // Local mode fallback
                 appState.studentRecords.push(payload);
                 refreshDashboard();
                 alert(`Data Saved Locally!\nYour SUS Score: ${finalSUSMultiplierScore}`);
@@ -1015,7 +1042,6 @@
             }
         }
 
-        // Recompute Dashboard Metrics & Render lists/tables
         function refreshDashboard() {
             const records = appState.studentRecords;
             document.getElementById('dash-total-students').innerText = records.length;
@@ -1046,11 +1072,15 @@
             const tbody = document.getElementById('dash-student-table-body');
             tbody.innerHTML = '';
             [...records].reverse().forEach(r => {
-                const name = r.student_name ? r.student_name : r.name;
-                const id = r.student_id ? r.student_id : r.id;
-                const scenario = r.scenario ? r.scenario : 'Scenario A';
+                const name = r.student_name || r.name || 'Unknown';
+                const id = r.student_id || r.id || 'N/A';
+                const scenario = r.scenario || 'Scenario A';
                 const shortScenario = scenario.split(':')[0]; 
-                const susDisplay = r.sus_score ? r.sus_score : 'N/A';
+                const susDisplay = r.sus_score || 'N/A';
+
+                // Format the Date
+                let dateObj = r.created_at ? new Date(r.created_at) : new Date();
+                let dateDisplay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 
                 tbody.innerHTML += `
                     <tr class="hover:bg-brand-bg/40 transition-colors">
@@ -1058,7 +1088,7 @@
                             <p class="font-bold text-brand-dark text-sm">${name}</p>
                             <span class="text-xs text-brand-muted font-mono">${id}</span>
                         </td>
-                        <td class="py-4 px-4 text-center font-semibold text-sm text-brand-muted">${r.cohort}</td>
+                        <td class="py-4 px-4 text-center text-xs text-brand-muted font-medium">${dateDisplay}</td>
                         <td class="py-4 px-4 text-center font-semibold text-xs text-brand-tealDeep"><span class="bg-brand-mintLight px-2 py-1 rounded-md">${shortScenario}</span></td>
                         <td class="py-4 px-4 text-center font-bold text-sm ${parseFloat(r.latency) <= 5.5 ? 'text-brand-accent' : 'text-red-500'}">${r.latency}s</td>
                         <td class="py-4 px-4 text-center font-bold text-sm ${parseInt(r.efficiency) >= 80 ? 'text-brand-accent' : 'text-yellow-600'}">${r.efficiency}%</td>
@@ -1079,8 +1109,7 @@
                 let badgeStyle = "bg-yellow-400 text-yellow-900";
                 if (idx === 1) badgeStyle = "bg-slate-300 text-slate-800";
                 if (idx === 2) badgeStyle = "bg-amber-600 text-amber-100";
-
-                const name = r.student_name ? r.student_name : r.name;
+                const name = r.student_name || r.name;
 
                 rankingList.innerHTML += `
                     <div class="flex items-center justify-between p-3.5 bg-brand-bg border border-brand-mint rounded-xl">
@@ -1096,7 +1125,6 @@
                 `;
             });
 
-            // Sync Heatmap Bars
             const h1 = Math.min(appState.hesitationCount.node_1, 100);
             const h2 = Math.min(appState.hesitationCount.node_2, 100);
             const h3 = Math.min(appState.hesitationCount.node_3, 100);
@@ -1111,7 +1139,6 @@
                         <div class="bg-brand-teal h-full" style="width: ${h1}%"></div>
                     </div>
                 </div>
-
                 <div class="space-y-1.5">
                     <div class="flex justify-between text-xs font-bold text-brand-dark">
                         <span>node-2: Check Respiratory Rate Rate-limit</span>
@@ -1121,7 +1148,6 @@
                         <div class="bg-orange-500 h-full" style="width: ${h2}%"></div>
                     </div>
                 </div>
-
                 <div class="space-y-1.5">
                     <div class="flex justify-between text-xs font-bold text-brand-dark">
                         <span>node-3: Check Capillary Refill Time (CRT)</span>

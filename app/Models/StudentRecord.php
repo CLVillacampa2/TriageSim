@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TriageSession extends Model
+class StudentRecord extends Model
 {
     use HasFactory;
 
-    protected $table = 'triage_sessions'; // Double check your exact table name mapping
+    // The table associated with the model
+    protected $table = 'student_records';
 
+    // Attributes that can be securely mass-assigned via API payloads
     protected $fillable = [
         'student_id',
         'student_name',
@@ -19,12 +21,5 @@ class TriageSession extends Model
         'latency',
         'efficiency',
         'accuracy',
-        'path_log',
-        'sus_responses',
-        'sus_score',
     ];
-protected $casts = [
-    'path_log' => 'array',
-    'sus_responses' => 'array',
-];
 }
