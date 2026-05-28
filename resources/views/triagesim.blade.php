@@ -173,28 +173,27 @@
                 <h3 class="text-lg font-bold text-brand-dark">Case Evaluation &amp; Path Review</h3>
             </div>
             <p class="text-xs text-brand-muted mb-4 pb-4 border-b border-brand-bg">
-                Review your path results, errors made, and correct alternative parameters prior to completing the study survey.
+                Review your path results, errors made, and correct alternative parameters.
             </p>
             
             <div id="resultModalContent" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2">
                 </div>
             
-            <div class="flex gap-3 border-t border-brand-mint pt-4">
-                <button onclick="closeResultAndOpenSUS()" class="w-full py-3.5 px-4 bg-brand-teal hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-teal/10">
-                    <span>Proceed to Usability Survey (SUS)</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
+            <div id="resultModalButtonWrapper" class="flex gap-3 border-t border-brand-mint pt-4">
             </div>
         </div>
     </div>
 
     <div id="susModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
-            <h3 class="text-lg font-bold text-brand-dark mb-2 flex items-center gap-2 text-brand-teal">
-                <i data-lucide="clipboard-check" class="w-5 h-5"></i> System Usability Scale (SUS)
-            </h3>
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-lg font-bold text-brand-dark flex items-center gap-2 text-brand-teal">
+                    <i data-lucide="clipboard-check" class="w-5 h-5"></i> System Usability Scale (SUS)
+                </h3>
+                <span class="px-3 py-1 bg-brand-accent/10 text-brand-accent text-xs font-bold rounded-full uppercase tracking-wider">Day 3 Final Requirement</span>
+            </div>
             <p class="text-xs text-brand-muted mb-4 pb-4 border-b border-brand-bg">
-                Methodology Step 4: Please rate the platform's student-friendliness. (Scale: 1 = Strongly Disagree, 5 = Strongly Agree). You must complete this to submit your session data.
+                Methodology Step 4: Please rate the platform's student-friendliness. (Scale: 1 = Strongly Disagree, 5 = Strongly Agree). You must complete this to submit your final session data.
             </p>
             
             <div id="susQuestionsWrapper" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2">
@@ -202,7 +201,7 @@
             
             <div class="flex gap-3 border-t border-brand-mint pt-4">
                 <button onclick="submitFinalSessionWithSUS()" class="w-full py-3 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">
-                    Submit Survey & Save Data
+                    Submit Survey & Conclude Testing Protocol
                 </button>
             </div>
         </div>
@@ -231,10 +230,10 @@
                 </div>
                 <div class="space-y-3 pt-4 border-t border-brand-mintLight">
                     <div class="flex items-center gap-2.5 text-sm text-brand-dark font-medium">
-                        <i data-lucide="activity" class="w-4 h-4 text-brand-teal"></i> Real-time Latency (L) Telemetry
+                        <i data-lucide="clock" class="w-4 h-4 text-brand-teal"></i> 3-Day Testing Protocol Enforced
                     </div>
                     <div class="flex items-center gap-2.5 text-sm text-brand-dark font-medium">
-                        <i data-lucide="git-branch" class="w-4 h-4 text-brand-teal"></i> Multi-path Branching Architecture
+                        <i data-lucide="activity" class="w-4 h-4 text-brand-teal"></i> Real-time Latency (L) Telemetry
                     </div>
                 </div>
             </div>
@@ -281,7 +280,7 @@
             <div class="text-sm text-brand-muted space-y-4 max-h-72 overflow-y-auto p-5 bg-brand-bg rounded-lg border border-brand-mint mb-6">
                 <p class="font-bold text-brand-dark">Project Title: TriageSim Branching-Scenario Simulation Engine</p>
                 <p><strong>Introduction:</strong> You are being invited to participate in an evaluation study tracking the efficacy of non-linear branching engines in medical triage training. Your participation is entirely autonomous and voluntary.</p>
-                <p><strong>Procedure:</strong> If you choose to participate, you will complete simulated emergency triage cases. The system will record background interaction telemetry (decision hesitation times and path choices) to assess performance progression.</p>
+                <p><strong>Procedure:</strong> If you choose to participate, you will complete 3 simulated emergency triage cases over the course of 3 days. The system will record background interaction telemetry (decision hesitation times and path choices) to assess performance progression.</p>
                 <p><strong>Data Confidentiality:</strong> All recorded metrics are processed solely for statistical verification. Your identity traits will be decoupled from aggregate research papers.</p>
                 <p><strong>Right to Withdraw:</strong> You maintain the unconditional right to abort or terminate your simulation session at any timeline marker without administrative penalty.</p>
             </div>
@@ -311,18 +310,19 @@
                 </div>
                 <div>
                     <h2 class="text-xl font-bold leading-tight">Student Profile Setup</h2>
-                    <p class="text-xs text-brand-mintLight">Provide details for cohort logging (Optional)</p>
+                    <p class="text-xs text-brand-mintLight">Fields marked with (*) are required</p>
                 </div>
             </div>
 
             <div class="p-6 space-y-5 bg-white">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student Name <span class="text-brand-muted text-[10px] lowercase">(optional)</span></label>
-                    <input type="text" id="studentInputName" class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50" placeholder="e.g. John Doe">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="studentInputName" required class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50" placeholder="e.g. John Doe">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student ID <span class="text-brand-muted text-[10px] lowercase">(optional)</span></label>
-                    <input type="text" id="studentInputId" class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50" placeholder="e.g. STU2026118">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student ID <span class="text-red-500">*</span></label>
+                    <input type="text" id="studentInputId" oninput="checkStudentHistory(this)" required class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50" placeholder="e.g. STU2026118">
+                    <p class="text-[10px] text-brand-muted mt-1 font-medium">Entering your ID will automatically update your scenario availability.</p>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Cohort / Section</label>
@@ -335,14 +335,15 @@
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Methodology Clinical Scenario</label>
                     <select id="studentInputScenario" class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all bg-white">
-                        <option value="START_NODE">Scenario A: Mass Casualty (Trauma/Respiratory)</option>
-                        <option value="SCENARIO_B_START">Scenario B: Structural Fire (Ambulatory Check)</option>
+                        <option value="START_NODE" data-original-text="Scenario A: Mass Casualty (Trauma/Respiratory)">Scenario A: Mass Casualty (Trauma/Respiratory)</option>
+                        <option value="SCENARIO_B_START" data-original-text="Scenario B: Structural Fire (Ambulatory Check)">Scenario B: Structural Fire (Ambulatory Check)</option>
+                        <option value="SCENARIO_C_START" data-original-text="Scenario C: Vehicle Collision (No Respiration)">Scenario C: Vehicle Collision (No Respiration)</option>
                     </select>
                 </div>
 
-                <div class="p-3 bg-brand-bg border border-brand-mint rounded-xl text-xs text-brand-muted flex items-start gap-2.5">
-                    <i data-lucide="info" class="w-4 h-4 text-brand-teal shrink-0 mt-0.5"></i>
-                    <span>Leaving fields blank will automatically assign a mock profile so you can proceed immediately.</span>
+                <div id="statusAlertBox" class="hidden p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-start gap-2.5">
+                    <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                    <span id="statusAlertText"></span>
                 </div>
 
                 <button onclick="startStudentMode()" class="w-full bg-brand-accent hover:bg-brand-tealDark text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-accent/20 transition-all">
@@ -444,7 +445,7 @@
                     <div class="space-y-3.5">
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-brand-muted">Participant Name:</span>
-                            <span id="telemetryName" class="font-bold text-brand-dark text-xs">Live Participant</span>
+                            <span id="telemetryName" class="font-bold text-brand-dark text-xs truncate max-w-[120px] text-right">Live Participant</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-brand-muted">Clinical FSM Node:</span>
@@ -582,6 +583,7 @@
             </div>
 
             <div class="overflow-x-auto">
+                
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="border-b border-brand-mint text-xs font-bold text-brand-tealDark uppercase bg-brand-bg">
@@ -651,6 +653,8 @@
                 tagName: "Delayed (Yellow Tag)",
                 prompt: "Assessment Complete: However, your final classification is sub-optimal. A patient showing respiratory rate >30/min, poor perfusion, or mental confusion cannot be tagged yellow. They require an immediate RED tag."
             },
+
+            // --- SCENARIO B ---
             SCENARIO_B_START: {
                 prompt: "Emergency Triage Area (Scenario B): A structural fire has occurred. A patient approaches you walking, coughing slightly, complaining of a burned arm. What is the immediate START protocol action?",
                 options: [
@@ -672,6 +676,44 @@
                 textColor: "text-red-200",
                 tagName: "Incorrect Flow Logic",
                 prompt: "Assessment Complete: Protocol breakdown. In START triage, if a patient is ambulatory (able to walk), they are immediately tagged GREEN without proceeding down the RPM checklist."
+            },
+
+            // --- NEW: SCENARIO C (Day 3) ---
+            SCENARIO_C_START: {
+                prompt: "Emergency Triage Area (Scenario C): Vehicle Collision. You find an adult patient ejected from the vehicle. They are completely unresponsive, apneic, and pulseless.",
+                options: [
+                    { text: "Immediately tag patient as DECEASED (BLACK TAG)", nextState: "SCENARIO_C_WRONG", optimal: false },
+                    { text: "Perform manual airway maneuver (jaw-thrust/head-tilt) to check for spontaneous breath", nextState: "SCENARIO_C_AIRWAY", optimal: true },
+                    { text: "Check capillary refill time", nextState: "SCENARIO_C_WRONG", optimal: false }
+                ]
+            },
+            SCENARIO_C_AIRWAY: {
+                prompt: "You open the airway manually. The patient remains completely apneic (no spontaneous breathing). What is the protocol action?",
+                options: [
+                    { text: "Tag patient as DECEASED (BLACK TAG)", nextState: "RESULT_BLACK", optimal: true },
+                    { text: "Tag patient as IMMEDIATE (RED TAG)", nextState: "SCENARIO_C_WRONG_2", optimal: false }
+                ]
+            },
+            RESULT_BLACK: {
+                isTerminal: true,
+                tagColor: "bg-slate-800",
+                textColor: "text-slate-100",
+                tagName: "Deceased (Black Tag)",
+                prompt: "Assessment Complete: Based on START protocol, an apneic patient who does not breathe after opening the airway is tagged Deceased to conserve resources."
+            },
+            SCENARIO_C_WRONG: {
+                isTerminal: true,
+                tagColor: "bg-triage-red",
+                textColor: "text-red-100",
+                tagName: "Critical Error (Skipped Airway Check)",
+                prompt: "Assessment Complete: You must ALWAYS attempt to open the airway before determining a patient is deceased."
+            },
+            SCENARIO_C_WRONG_2: {
+                isTerminal: true,
+                tagColor: "bg-triage-red",
+                textColor: "text-red-100",
+                tagName: "Critical Error (Red Tagged a Deceased Patient)",
+                prompt: "Assessment Complete: A patient who does not breathe even after airway repositioning cannot be tagged Red. They must be tagged Black."
             }
         };
 
@@ -711,6 +753,9 @@
         let deviations = 0;
         let answerHistory = []; 
         let currentSession = {};
+        
+        // Track if it's their 3rd Day to trigger SUS
+        let isFinalDay = false;
 
         function initSUSForm() {
             const wrapper = document.getElementById('susQuestionsWrapper');
@@ -799,7 +844,6 @@
 
         function exportToCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            // Updated CSV headers to include individual questions and date
             csvContent += "Date Taken,Student ID,Name,Cohort,Scenario,Decision Latency (s),Path Efficiency (%),Accuracy (%),SUS Final Score,SUS Q1,SUS Q2,SUS Q3,SUS Q4,SUS Q5,SUS Q6,SUS Q7,SUS Q8,SUS Q9,SUS Q10\n";
             
             appState.studentRecords.forEach(r => {
@@ -809,7 +853,6 @@
                 let scenario = r.scenario || 'Scenario A';
                 let sus = r.sus_score || 'N/A';
                 
-                // Parse survey responses securely
                 let qResponses = Array(10).fill('N/A');
                 if (r.sus_responses) {
                     try {
@@ -831,23 +874,87 @@
             document.body.removeChild(link);
         }
 
-        function startStudentMode() {
-            const scenarioSelect = document.getElementById('studentInputScenario');
-            currentState = scenarioSelect ? scenarioSelect.value : 'START_NODE';
-            const fullScenarioText = scenarioSelect ? scenarioSelect.options[scenarioSelect.selectedIndex].text : "Scenario A: Mass Casualty";
-            const shortScenarioTitle = fullScenarioText.split(' (')[0]; 
+        // --- NEW: Dynamic ID Checker to lock dropdown items ---
+        function checkStudentHistory(inputField) {
+            const id = inputField.value.trim();
+            if (!id) return;
             
+            const pastRecords = appState.studentRecords.filter(r => (r.student_id === id || r.id === id));
+            const options = document.getElementById('studentInputScenario').options;
+            
+            for (let i = 0; i < options.length; i++) {
+                const shortTitle = options[i].getAttribute('data-original-text').split(' (')[0];
+                const alreadyDid = pastRecords.some(r => r.scenario.includes(shortTitle));
+                
+                if (alreadyDid) {
+                    options[i].text = shortTitle + " - ✓ (COMPLETED)";
+                    options[i].disabled = true;
+                } else {
+                    options[i].text = options[i].getAttribute('data-original-text');
+                    options[i].disabled = false;
+                }
+            }
+        }
+
+        // --- NEW: Validate exactly 1 per day and max 3 days ---
+        function startStudentMode() {
+            const inputName = document.getElementById('studentInputName').value.trim();
+            const inputId = document.getElementById('studentInputId').value.trim();
+            const alertBox = document.getElementById('statusAlertBox');
+            const alertText = document.getElementById('statusAlertText');
+
+            if (!inputName || !inputId) {
+                alertText.innerText = "Error: Student Name and ID are strictly required to track your research protocol.";
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            const scenarioSelect = document.getElementById('studentInputScenario');
+            const selectedScenario = scenarioSelect.value;
+            const fullScenarioText = scenarioSelect.options[scenarioSelect.selectedIndex].text;
+            
+            // Check if they selected a disabled item somehow
+            if(scenarioSelect.options[scenarioSelect.selectedIndex].disabled) {
+                alertText.innerText = "Error: You have already completed this scenario on a previous day.";
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            const shortScenarioTitle = fullScenarioText.split(' (')[0]; 
+
+            // DAY TRACKING LOGIC
+            const studentPastRecords = appState.studentRecords.filter(r => (r.student_id === inputId || r.id === inputId));
+            
+            if (studentPastRecords.length >= 3) {
+                alertText.innerText = "Research Concluded: You have successfully completed all 3 days of testing! Thank you for participating.";
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            const todayStr = new Date().toLocaleDateString();
+            const playedToday = studentPastRecords.some(r => {
+                let rDate = r.created_at ? new Date(r.created_at).toLocaleDateString() : new Date().toLocaleDateString();
+                return rDate === todayStr;
+            });
+
+            if (playedToday) {
+                alertText.innerText = "Protocol Rule: You can only complete one scenario per day. You have already finished today's session. Please return tomorrow.";
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            // If they have done 2 scenarios, this is their 3rd and final day. Trigger SUS.
+            isFinalDay = (studentPastRecords.length === 2);
+            alertBox.classList.add('hidden'); // Clear errors
+
             deviations = 0;
             answerHistory = []; 
 
-            const inputName = document.getElementById('studentInputName').value.trim();
-            const inputId = document.getElementById('studentInputId').value.trim();
             const inputCohort = document.getElementById('studentInputCohort').value;
-
             currentSession = {
-                id: inputId || "STU" + Math.floor(100000 + Math.random() * 900000),
-                name: inputName || "Live Participant " + Math.floor(10 + Math.random() * 89),
-                cohort: inputCohort || "NURS-301-A",
+                id: inputId,
+                name: inputName,
+                cohort: inputCohort,
                 scenarioName: shortScenarioTitle,
                 cumulativeLatency: 0, steps: 0, optimalSteps: 0,
                 finalLatency: 0, finalEfficiency: 0, finalAccuracy: 0
@@ -950,6 +1057,25 @@
 
                 modalHtml += `</div>`;
 
+                // --- NEW BUTTON LOGIC BASED ON DAY ---
+                let buttonHtml = '';
+                if (isFinalDay) {
+                    buttonHtml = `
+                        <button onclick="closeResultAndOpenSUS()" class="w-full py-3.5 px-4 bg-brand-teal hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-teal/10">
+                            <span>Proceed to Usability Survey (SUS)</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    `;
+                } else {
+                    buttonHtml = `
+                        <button onclick="submitFinalSessionWithoutSUS()" class="w-full py-3.5 px-4 bg-brand-accent hover:bg-brand-teal text-white font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-accent/10">
+                            <span>Save Session & Return Tomorrow</span>
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                        </button>
+                    `;
+                }
+                document.getElementById('resultModalButtonWrapper').innerHTML = buttonHtml;
+
                 document.getElementById('resultModalContent').innerHTML = modalHtml;
                 document.getElementById('resultModal').classList.remove('hidden');
 
@@ -978,6 +1104,57 @@
             lucide.createIcons();
         }
 
+        // Universal function to dispatch data payload to Laravel
+        function dispatchSessionPayload(payload, successMessage) {
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            if (csrfMeta && csrfMeta.getAttribute('content')) {
+                fetch('/api/sessions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfMeta.getAttribute('content')
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    appState.studentRecords.push(payload);
+                    refreshDashboard();
+                    alert(successMessage);
+                    document.getElementById('resultModal').classList.add('hidden');
+                    document.getElementById('susModal').classList.add('hidden');
+                    showView('homeView');
+                })
+                .catch(err => console.error("Database sync exception: ", err));
+            } else {
+                appState.studentRecords.push(payload);
+                refreshDashboard();
+                alert(successMessage + " (Saved Locally)");
+                document.getElementById('resultModal').classList.add('hidden');
+                document.getElementById('susModal').classList.add('hidden');
+                showView('homeView');
+            }
+        }
+
+        // For Days 1 & 2
+        function submitFinalSessionWithoutSUS() {
+            const payload = {
+                student_id: currentSession.id,
+                student_name: currentSession.name,
+                cohort: currentSession.cohort,
+                scenario: currentSession.scenarioName,
+                latency: currentSession.finalLatency === 0 ? 4.5 : currentSession.finalLatency,
+                efficiency: currentSession.finalEfficiency,
+                accuracy: currentSession.finalAccuracy,
+                path_log: JSON.stringify(answerHistory), 
+                sus_responses: null,  
+                sus_score: 0, // Defaults to 0 since it wasn't taken yet
+                created_at: new Date().toISOString()
+            };
+            dispatchSessionPayload(payload, "Session Saved! You have completed today's requirement. Please return tomorrow.");
+        }
+
+        // For Day 3 Final
         function submitFinalSessionWithSUS() {
             let answers = {};
             let allAnswered = true;
@@ -992,7 +1169,7 @@
             }
             
             if (!allAnswered) {
-                alert("Research Requirement: Please answer all 10 System Usability Scale questions before submitting your data.");
+                alert("Research Requirement: Please answer all 10 System Usability Scale questions before submitting your final data.");
                 return;
             }
             
@@ -1011,35 +1188,9 @@
                 path_log: JSON.stringify(answerHistory), 
                 sus_responses: JSON.stringify(answers),  
                 sus_score: finalSUSMultiplierScore,
-                created_at: new Date().toISOString() // Fallback timestamp for local UI
+                created_at: new Date().toISOString() 
             };
-
-            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
-            if (csrfMeta && csrfMeta.getAttribute('content')) {
-                fetch('/api/sessions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfMeta.getAttribute('content')
-                    },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    appState.studentRecords.push(payload);
-                    refreshDashboard();
-                    alert(`Data Saved!\nYour SUS Score: ${finalSUSMultiplierScore}`);
-                    document.getElementById('susModal').classList.add('hidden');
-                    showView('homeView');
-                })
-                .catch(err => console.error("Database sync exception: ", err));
-            } else {
-                appState.studentRecords.push(payload);
-                refreshDashboard();
-                alert(`Data Saved Locally!\nYour SUS Score: ${finalSUSMultiplierScore}`);
-                document.getElementById('susModal').classList.add('hidden');
-                showView('homeView');
-            }
+            dispatchSessionPayload(payload, `Final Protocol Complete!\nYour Final SUS Score: ${finalSUSMultiplierScore}`);
         }
 
         function refreshDashboard() {
@@ -1076,9 +1227,10 @@
                 const id = r.student_id || r.id || 'N/A';
                 const scenario = r.scenario || 'Scenario A';
                 const shortScenario = scenario.split(':')[0]; 
-                const susDisplay = r.sus_score || 'N/A';
+                
+                // If it is 0, we know they took it on Day 1 or 2 and skipped the survey
+                const susDisplay = (r.sus_score && r.sus_score > 0) ? r.sus_score : 'N/A';
 
-                // Format the Date
                 let dateObj = r.created_at ? new Date(r.created_at) : new Date();
                 let dateDisplay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 
@@ -1165,6 +1317,7 @@
             refreshDashboard();
             lucide.createIcons();
         }
+        
     </script>
 </body>
 </html>
