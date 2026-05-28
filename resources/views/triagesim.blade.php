@@ -56,7 +56,6 @@
             border-color: #0096a5;
         }
 
-        /* Animated transitions between views */
         .view-frame {
             display: none;
             animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -67,31 +66,14 @@
         }
 
         @keyframes slideUpFade {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Elegant scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #eef9f5;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c3eade;
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #0096a5;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #eef9f5; }
+        ::-webkit-scrollbar-thumb { background: #c3eade; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0096a5; }
     </style>
 </head>
 <body class="min-height-screen flex flex-col items-center justify-center p-4 md:p-8">
@@ -156,12 +138,8 @@
                 Are you sure you want to quit this scenario? Your current progress and telemetry metrics will be lost.
             </p>
             <div class="flex gap-3">
-                <button onclick="closeExitModal()" class="flex-1 py-2.5 px-4 border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-bg transition-colors text-sm">
-                    Cancel
-                </button>
-                <button onclick="executeExitSimulation()" class="flex-1 py-2.5 px-4 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl transition-colors text-sm">
-                    Exit Scenario
-                </button>
+                <button onclick="closeExitModal()" class="flex-1 py-2.5 px-4 border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-bg transition-colors text-sm">Cancel</button>
+                <button onclick="executeExitSimulation()" class="flex-1 py-2.5 px-4 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl transition-colors text-sm">Exit Scenario</button>
             </div>
         </div>
     </div>
@@ -175,12 +153,8 @@
             <p class="text-xs text-brand-muted mb-4 pb-4 border-b border-brand-bg">
                 Review your path results, errors made, and correct alternative parameters.
             </p>
-            
-            <div id="resultModalContent" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2">
-                </div>
-            
-            <div id="resultModalButtonWrapper" class="flex gap-3 border-t border-brand-mint pt-4">
-            </div>
+            <div id="resultModalContent" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
+            <div id="resultModalButtonWrapper" class="flex gap-3 border-t border-brand-mint pt-4"></div>
         </div>
     </div>
 
@@ -195,10 +169,7 @@
             <p class="text-xs text-brand-muted mb-4 pb-4 border-b border-brand-bg">
                 Methodology Step 4: Please rate the platform's student-friendliness. (Scale: 1 = Strongly Disagree, 5 = Strongly Agree). You must complete this to submit your final session data.
             </p>
-            
-            <div id="susQuestionsWrapper" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2">
-                </div>
-            
+            <div id="susQuestionsWrapper" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
             <div class="flex gap-3 border-t border-brand-mint pt-4">
                 <button onclick="submitFinalSessionWithSUS()" class="w-full py-3 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">
                     Submit Survey & Conclude Testing Protocol
@@ -430,8 +401,7 @@
 
                     <div class="space-y-4">
                         <span class="text-xs font-bold text-brand-tealDark uppercase tracking-wider block">Determine Next Step</span>
-                        <div id="optionsWrapper" class="flex flex-col gap-3">
-                            </div>
+                        <div id="optionsWrapper" class="flex flex-col gap-3"></div>
                     </div>
                 </div>
             </div>
@@ -574,29 +544,63 @@
             </div>
         </div>
 
-        <div class="premium-card p-6 bg-white overflow-hidden">
-            <div class="flex items-center justify-between border-b border-brand-bg pb-4 mb-4">
-                <div>
-                    <h3 class="font-bold text-brand-dark">Individual Student Data Records</h3>
-                    <p class="text-xs text-brand-muted">Fully logged FSM transition variables</p>
+        <div class="premium-card p-6 bg-white mb-8">
+            
+            <div class="flex flex-wrap gap-4 items-center justify-between mb-5">
+                <div class="relative flex-1 min-w-[280px]">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted"></i>
+                    <input type="text" id="studentSearch" placeholder="Search student name or ID..." 
+                           class="w-full pl-11 pr-4 py-3 bg-brand-bg border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/70">
+                </div>
+
+                <button type="button" id="toggleFilterBtn" onclick="toggleFilterPanel()"
+                        class="flex items-center gap-2 px-5 py-3 bg-white border-2 border-brand-mint rounded-xl text-brand-tealDark font-bold hover:bg-brand-mintLight transition-colors">
+                    <i data-lucide="settings-2" class="w-4 h-4"></i> Advanced Filters 
+                    <i data-lucide="chevron-down" id="arrowIcon" class="w-4 h-4 transition-transform duration-200 ml-1"></i>
+                </button>
+            </div>
+
+            <div id="filterPanel" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out mb-0">
+                <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-5 bg-brand-bg border-2 border-brand-mint rounded-xl mb-5">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-tealDark mb-2">Simulation Target</label>
+                        <select id="filterScenario" class="w-full px-4 py-2.5 bg-white border-2 border-brand-mint rounded-lg text-brand-dark font-medium focus:border-brand-teal outline-none cursor-pointer">
+                            <option value="all">✨ All Scenarios</option>
+                            <option value="Scenario A">📅 Scenario A (Day 1)</option>
+                            <option value="Scenario B">📅 Scenario B (Day 2)</option>
+                            <option value="Scenario C">📅 Scenario C (Day 3)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-tealDark mb-2">Sort Records By</label>
+                        <select id="sortRecords" class="w-full px-4 py-2.5 bg-white border-2 border-brand-mint rounded-lg text-brand-dark font-medium focus:border-brand-teal outline-none cursor-pointer">
+                            <option value="default">🕒 Date (Newest First)</option>
+                            <option value="name-asc">🔤 Alphabetical (A - Z)</option>
+                            <option value="name-desc">🔤 Alphabetical (Z - A)</option>
+                            <option value="time-fastest">⚡ Response Time (Fastest)</option>
+                            <option value="time-slowest">🐢 Response Time (Slowest)</option>
+                            <option value="accuracy-highest">🎯 Performance Accuracy (Highest)</option>
+                            <option value="sus-highest">📊 SUS Score (Highest)</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
-                
-                <table class="w-full text-left border-collapse">
+            <div class="overflow-x-auto rounded-xl border-2 border-brand-mint">
+                <table class="w-full text-left text-sm whitespace-nowrap">
                     <thead>
-                        <tr class="border-b border-brand-mint text-xs font-bold text-brand-tealDark uppercase bg-brand-bg">
-                            <th class="py-3 px-4">Student ID / Name</th>
-                            <th class="py-3 px-4 text-center">Date Taken</th>
-                            <th class="py-3 px-4 text-center">Scenario</th>
-                            <th class="py-3 px-4 text-center">Avg Latency (s)</th>
-                            <th class="py-3 px-4 text-center">Efficiency</th>
-                            <th class="py-3 px-4 text-center">Accuracy</th>
-                            <th class="py-3 px-4 text-center">SUS Score</th>
+                        <tr class="bg-brand-mintLight border-b-2 border-brand-mint text-brand-tealDark font-bold">
+                            <th class="p-4">Student ID</th>
+                            <th class="p-4">Full Name</th>
+                            <th class="p-4">Cohort</th>
+                            <th class="p-4">Scenario Matrix</th>
+                            <th class="p-4">Latency</th>
+                            <th class="p-4">Accuracy</th>
+                            <th class="p-4 text-right">SUS Rating</th>
                         </tr>
                     </thead>
-                    <tbody id="dash-student-table-body" class="divide-y divide-brand-bg"></tbody>
+                    <tbody id="studentTableBody" class="divide-y divide-brand-mint bg-white">
+                        </tbody>
                 </table>
             </div>
         </div>
@@ -754,7 +758,6 @@
         let answerHistory = []; 
         let currentSession = {};
         
-        // Track if it's their 3rd Day to trigger SUS
         let isFinalDay = false;
 
         function initSUSForm() {
@@ -874,7 +877,6 @@
             document.body.removeChild(link);
         }
 
-        // --- NEW: Dynamic ID Checker to lock dropdown items ---
         function checkStudentHistory(inputField) {
             const id = inputField.value.trim();
             if (!id) return;
@@ -896,7 +898,6 @@
             }
         }
 
-        // --- NEW: Validate exactly 1 per day and max 3 days ---
         function startStudentMode() {
             const inputName = document.getElementById('studentInputName').value.trim();
             const inputId = document.getElementById('studentInputId').value.trim();
@@ -913,7 +914,6 @@
             const selectedScenario = scenarioSelect.value;
             const fullScenarioText = scenarioSelect.options[scenarioSelect.selectedIndex].text;
             
-            // Check if they selected a disabled item somehow
             if(scenarioSelect.options[scenarioSelect.selectedIndex].disabled) {
                 alertText.innerText = "Error: You have already completed this scenario on a previous day.";
                 alertBox.classList.remove('hidden');
@@ -922,7 +922,6 @@
 
             const shortScenarioTitle = fullScenarioText.split(' (')[0]; 
 
-            // DAY TRACKING LOGIC
             const studentPastRecords = appState.studentRecords.filter(r => (r.student_id === inputId || r.id === inputId));
             
             if (studentPastRecords.length >= 3) {
@@ -943,10 +942,10 @@
                 return;
             }
 
-            // If they have done 2 scenarios, this is their 3rd and final day. Trigger SUS.
             isFinalDay = (studentPastRecords.length === 2);
-            alertBox.classList.add('hidden'); // Clear errors
+            alertBox.classList.add('hidden'); 
 
+            currentState = selectedScenario;
             deviations = 0;
             answerHistory = []; 
 
@@ -1057,7 +1056,6 @@
 
                 modalHtml += `</div>`;
 
-                // --- NEW BUTTON LOGIC BASED ON DAY ---
                 let buttonHtml = '';
                 if (isFinalDay) {
                     buttonHtml = `
@@ -1075,7 +1073,6 @@
                     `;
                 }
                 document.getElementById('resultModalButtonWrapper').innerHTML = buttonHtml;
-
                 document.getElementById('resultModalContent').innerHTML = modalHtml;
                 document.getElementById('resultModal').classList.remove('hidden');
 
@@ -1104,7 +1101,6 @@
             lucide.createIcons();
         }
 
-        // Universal function to dispatch data payload to Laravel
         function dispatchSessionPayload(payload, successMessage) {
             const csrfMeta = document.querySelector('meta[name="csrf-token"]');
             if (csrfMeta && csrfMeta.getAttribute('content')) {
@@ -1136,7 +1132,6 @@
             }
         }
 
-        // For Days 1 & 2
         function submitFinalSessionWithoutSUS() {
             const payload = {
                 student_id: currentSession.id,
@@ -1148,13 +1143,12 @@
                 accuracy: currentSession.finalAccuracy,
                 path_log: JSON.stringify(answerHistory), 
                 sus_responses: null,  
-                sus_score: 0, // Defaults to 0 since it wasn't taken yet
+                sus_score: 0, 
                 created_at: new Date().toISOString()
             };
             dispatchSessionPayload(payload, "Session Saved! You have completed today's requirement. Please return tomorrow.");
         }
 
-        // For Day 3 Final
         function submitFinalSessionWithSUS() {
             let answers = {};
             let allAnswered = true;
@@ -1193,6 +1187,79 @@
             dispatchSessionPayload(payload, `Final Protocol Complete!\nYour Final SUS Score: ${finalSUSMultiplierScore}`);
         }
 
+        // ============================================
+        // INSTRUCTOR DASHBOARD JAVASCRIPT ENGINE
+        // ============================================
+
+        function toggleFilterPanel() {
+            const filterPanel = document.getElementById('filterPanel');
+            const arrowIcon = document.getElementById('arrowIcon');
+            const toggleFilterBtn = document.getElementById('toggleFilterBtn');
+
+            if (filterPanel.style.maxHeight === '0px' || !filterPanel.style.maxHeight) {
+                filterPanel.style.maxHeight = '300px'; 
+                arrowIcon.style.transform = 'rotate(180deg)';
+                toggleFilterBtn.classList.add('border-brand-teal', 'bg-brand-mintLight');
+            } else {
+                filterPanel.style.maxHeight = '0px';
+                arrowIcon.style.transform = 'rotate(0deg)';
+                toggleFilterBtn.classList.remove('border-brand-teal', 'bg-brand-mintLight');
+            }
+        }
+
+        function processTableFilters() {
+            const query = document.getElementById('studentSearch').value.toLowerCase().trim();
+            const targetScenario = document.getElementById('filterScenario').value;
+            const tableBody = document.getElementById('studentTableBody');
+            const rows = Array.from(tableBody.getElementsByClassName('student-row'));
+
+            rows.forEach(row => {
+                const sid = row.getAttribute('data-id').toLowerCase();
+                const sname = row.getAttribute('data-name');
+                const scenario = row.getAttribute('data-scenario');
+
+                const matchesSearch = sid.includes(query) || sname.includes(query);
+                const matchesScenario = (targetScenario === 'all' || scenario.includes(targetScenario));
+
+                if (matchesSearch && matchesScenario) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function executeTableSort() {
+            const method = document.getElementById('sortRecords').value;
+            const tableBody = document.getElementById('studentTableBody');
+            const rows = Array.from(tableBody.getElementsByClassName('student-row'));
+
+            const dynamicSortingOrder = [...rows].sort((rowA, rowB) => {
+                if (method === 'name-asc') {
+                    return rowA.getAttribute('data-name').localeCompare(rowB.getAttribute('data-name'));
+                }
+                if (method === 'name-desc') {
+                    return rowB.getAttribute('data-name').localeCompare(rowA.getAttribute('data-name'));
+                }
+                if (method === 'time-fastest') {
+                    return parseFloat(rowA.getAttribute('data-latency')) - parseFloat(rowB.getAttribute('data-latency'));
+                }
+                if (method === 'time-slowest') {
+                    return parseFloat(rowB.getAttribute('data-latency')) - parseFloat(rowA.getAttribute('data-latency'));
+                }
+                if (method === 'accuracy-highest') {
+                    return parseInt(rowB.getAttribute('data-accuracy')) - parseInt(rowA.getAttribute('data-accuracy'));
+                }
+                if (method === 'sus-highest') {
+                    return parseFloat(rowB.getAttribute('data-sus')) - parseFloat(rowA.getAttribute('data-sus'));
+                }
+                return 0; // default
+            });
+
+            // Reinsert cleanly back into the DOM
+            dynamicSortingOrder.forEach(matchedRow => tableBody.appendChild(matchedRow));
+        }
+
         function refreshDashboard() {
             const records = appState.studentRecords;
             document.getElementById('dash-total-students').innerText = records.length;
@@ -1220,36 +1287,58 @@
                 document.getElementById('dash-avg-latency').className = "text-3xl font-black text-red-500 leading-tight mt-2";
             }
 
-            const tbody = document.getElementById('dash-student-table-body');
+            const tbody = document.getElementById('studentTableBody');
             tbody.innerHTML = '';
-            [...records].reverse().forEach(r => {
-                const name = r.student_name || r.name || 'Unknown';
-                const id = r.student_id || r.id || 'N/A';
-                const scenario = r.scenario || 'Scenario A';
-                const shortScenario = scenario.split(':')[0]; 
-                
-                // If it is 0, we know they took it on Day 1 or 2 and skipped the survey
-                const susDisplay = (r.sus_score && r.sus_score > 0) ? r.sus_score : 'N/A';
 
-                let dateObj = r.created_at ? new Date(r.created_at) : new Date();
-                let dateDisplay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                
-                tbody.innerHTML += `
-                    <tr class="hover:bg-brand-bg/40 transition-colors">
-                        <td class="py-4 px-4">
-                            <p class="font-bold text-brand-dark text-sm">${name}</p>
-                            <span class="text-xs text-brand-muted font-mono">${id}</span>
-                        </td>
-                        <td class="py-4 px-4 text-center text-xs text-brand-muted font-medium">${dateDisplay}</td>
-                        <td class="py-4 px-4 text-center font-semibold text-xs text-brand-tealDeep"><span class="bg-brand-mintLight px-2 py-1 rounded-md">${shortScenario}</span></td>
-                        <td class="py-4 px-4 text-center font-bold text-sm ${parseFloat(r.latency) <= 5.5 ? 'text-brand-accent' : 'text-red-500'}">${r.latency}s</td>
-                        <td class="py-4 px-4 text-center font-bold text-sm ${parseInt(r.efficiency) >= 80 ? 'text-brand-accent' : 'text-yellow-600'}">${r.efficiency}%</td>
-                        <td class="py-4 px-4 text-center font-bold text-sm ${parseInt(r.accuracy) >= 80 ? 'text-brand-teal' : 'text-red-500'}">${r.accuracy}%</td>
-                        <td class="py-4 px-4 text-center font-bold text-sm text-brand-tealDark">${susDisplay}</td>
-                    </tr>
-                `;
-            });
+            if (records.length === 0) {
+                tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="p-10 text-center text-brand-muted italic">
+                        📭 No performance logs available in database.
+                    </td>
+                </tr>`;
+            } else {
+                [...records].reverse().forEach(r => {
+                    const name = r.student_name || r.name || 'Unknown';
+                    const id = r.student_id || r.id || 'N/A';
+                    const cohort = r.cohort || 'N/A';
+                    const scenario = r.scenario || 'Scenario A';
+                    const shortScenario = scenario.split(':')[0]; 
+                    
+                    const susDisplay = (r.sus_score && r.sus_score > 0) ? Number(r.sus_score).toFixed(1) : 'N/A';
+                    const lat = parseFloat(r.latency).toFixed(2);
+                    const acc = parseInt(r.accuracy);
+                    const accColor = acc >= 80 ? '#00a887' : '#ef4444';
+                    
+                    let dateObj = r.created_at ? new Date(r.created_at) : new Date();
+                    let dateDisplay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    
+                    tbody.innerHTML += `
+                        <tr class="student-row hover:bg-brand-mintLight/50 transition-colors" 
+                            data-id="${id}" 
+                            data-name="${name.toLowerCase()}" 
+                            data-scenario="${scenario}" 
+                            data-latency="${lat}"
+                            data-accuracy="${acc}"
+                            data-sus="${r.sus_score || 0}">
+                            
+                            <td class="p-4 font-mono text-brand-teal font-bold">${id}</td>
+                            <td class="p-4 font-bold text-brand-dark">${name}</td>
+                            <td class="p-4"><span class="bg-brand-bg border border-brand-mint px-3 py-1 rounded-full text-[11px] font-bold text-brand-muted uppercase tracking-wider">${cohort}</span></td>
+                            <td class="p-4 text-brand-dark font-medium">${scenario}</td>
+                            <td class="p-4 text-amber-600 font-bold">${lat}s</td>
+                            <td class="p-4">
+                                <span class="font-bold" style="color: ${accColor};">
+                                    ${acc}%
+                                </span>
+                            </td>
+                            <td class="p-4 text-right font-bold text-purple-600">${susDisplay}</td>
+                        </tr>
+                    `;
+                });
+            }
 
+            // Top Paths Ranking Code
             const sorted = [...records].sort((a, b) => {
                 if (b.efficiency !== a.efficiency) return b.efficiency - a.efficiency;
                 return a.latency - b.latency;
@@ -1311,13 +1400,23 @@
                 </div>
             `;
             lucide.createIcons();
+
+            // Re-apply any active filters/sorts after reloading the data
+            if(document.getElementById('studentSearch')) {
+                processTableFilters();
+                executeTableSort();
+            }
         }
 
         window.onload = function() {
             refreshDashboard();
             lucide.createIcons();
+
+            // Bind listeners for dynamic filters
+            document.getElementById('studentSearch').addEventListener('input', processTableFilters);
+            document.getElementById('filterScenario').addEventListener('change', () => { processTableFilters(); executeTableSort(); });
+            document.getElementById('sortRecords').addEventListener('change', executeTableSort);
         }
-        
     </script>
 </body>
 </html>
