@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <title>TriageSim - Interactive First Aid and Triage Learning Platform</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,7 +42,7 @@
             background-color: #eef9f5;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
-        
+
         .premium-card {
             background: #ffffff;
             border: 2px solid #d1f2e9;
@@ -66,38 +67,66 @@
         }
 
         @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #eef9f5; }
-        ::-webkit-scrollbar-thumb { background: #c3eade; border-radius: 9999px; }
-        ::-webkit-scrollbar-thumb:hover { background: #0096a5; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #eef9f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c3eade;
+            border-radius: 9999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0096a5;
+        }
     </style>
 </head>
+
 <body class="min-height-screen flex flex-col items-center justify-center p-4 md:p-8">
 
     <header class="w-full max-w-6xl mb-8 flex items-center justify-between">
         <div class="flex items-center gap-3 cursor-pointer" onclick="showView('homeView')">
-            <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white shadow-md shadow-brand-accent/20">
+            <div
+                class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center text-white shadow-md shadow-brand-accent/20">
                 <i data-lucide="check" class="w-5 h-5 stroke-[3]"></i>
             </div>
             <div>
                 <span class="text-2xl font-bold tracking-tight text-brand-teal">TriageSim</span>
-                <span class="hidden md:inline-block ml-2 px-2.5 py-0.5 text-xs font-semibold bg-brand-mintLight text-brand-tealDark rounded-full">v2.0 Stable</span>
+                <span
+                    class="hidden md:inline-block ml-2 px-2.5 py-0.5 text-xs font-semibold bg-brand-mintLight text-brand-tealDark rounded-full">v2.0
+                    Stable</span>
             </div>
         </div>
         <div class="flex items-center gap-4">
-            <button onclick="toggleHelpModal()" class="w-10 h-10 rounded-full border-2 border-brand-mint bg-white hover:bg-brand-mintLight text-brand-tealDark flex items-center justify-center transition-colors">
+            <button onclick="toggleHelpModal()"
+                class="w-10 h-10 rounded-full border-2 border-brand-mint bg-white hover:bg-brand-mintLight text-brand-tealDark flex items-center justify-center transition-colors">
                 <i data-lucide="help-circle" class="w-5 h-5"></i>
             </button>
         </div>
     </header>
 
-    <div id="helpModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-lg w-full overflow-hidden shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
-            <div class="p-6 bg-gradient-to-r from-brand-teal to-brand-tealDark text-white flex justify-between items-center">
+    <div id="helpModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-lg w-full overflow-hidden shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+            <div
+                class="p-6 bg-gradient-to-r from-brand-teal to-brand-tealDark text-white flex justify-between items-center">
                 <h3 class="text-lg font-bold flex items-center gap-2">
                     <i data-lucide="book-open" class="w-5 h-5"></i> START Triage Reference Sheet
                 </h3>
@@ -106,15 +135,18 @@
                 </button>
             </div>
             <div class="p-6 space-y-4 text-sm text-brand-dark overflow-y-auto max-h-[70vh]">
-                <p class="font-medium text-brand-tealDark">Simple Triage and Rapid Treatment (START) Algorithm Rules:</p>
+                <p class="font-medium text-brand-tealDark">Simple Triage and Rapid Treatment (START) Algorithm Rules:
+                </p>
                 <div class="space-y-3">
                     <div class="p-3 bg-red-50 border-l-4 border-triage-red rounded-r-lg">
                         <strong class="text-triage-red block">Immediate (Red Tag)</strong>
-                        Respirations &gt; 30/min, Capillary Refill Time &gt; 2 seconds (or absent radial pulse), or unable to follow simple commands.
+                        Respirations &gt; 30/min, Capillary Refill Time &gt; 2 seconds (or absent radial pulse), or
+                        unable to follow simple commands.
                     </div>
                     <div class="p-3 bg-yellow-50 border-l-4 border-triage-yellow rounded-r-lg">
                         <strong class="text-triage-yellow block">Delayed (Yellow Tag)</strong>
-                        Spontaneous respirations present, Rate &lt; 30/min, perfusion metrics within normal limits (CRT &lt; 2s), but unable to walk.
+                        Spontaneous respirations present, Rate &lt; 30/min, perfusion metrics within normal limits (CRT
+                        &lt; 2s), but unable to walk.
                     </div>
                     <div class="p-3 bg-green-50 border-l-4 border-triage-green rounded-r-lg">
                         <strong class="text-triage-green block">Minor (Green Tag)</strong>
@@ -129,8 +161,10 @@
         </div>
     </div>
 
-    <div id="exitConfirmModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-sm w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+    <div id="exitConfirmModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-sm w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
             <h3 class="text-lg font-bold text-brand-dark mb-2 flex items-center gap-2 text-red-500">
                 <i data-lucide="alert-triangle" class="w-5 h-5"></i> Exit Simulation?
             </h3>
@@ -138,14 +172,19 @@
                 Are you sure you want to quit this scenario? Your current progress and telemetry metrics will be lost.
             </p>
             <div class="flex gap-3">
-                <button onclick="closeExitModal()" class="flex-1 py-2.5 px-4 border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-bg transition-colors text-sm">Cancel</button>
-                <button onclick="executeExitSimulation()" class="flex-1 py-2.5 px-4 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl transition-colors text-sm">Exit Scenario</button>
+                <button onclick="closeExitModal()"
+                    class="flex-1 py-2.5 px-4 border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-bg transition-colors text-sm">Cancel</button>
+                <button onclick="executeExitSimulation()"
+                    class="flex-1 py-2.5 px-4 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl transition-colors text-sm">Exit
+                    Scenario</button>
             </div>
         </div>
     </div>
 
-    <div id="resultModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+    <div id="resultModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
             <div class="flex items-center gap-2 text-brand-teal mb-2">
                 <i data-lucide="activity" class="w-5 h-5"></i>
                 <h3 class="text-lg font-bold text-brand-dark">Case Evaluation &amp; Path Review</h3>
@@ -158,20 +197,119 @@
         </div>
     </div>
 
-    <div id="susModal" class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+    <div id="lockWarningModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-md w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+            <div class="flex items-start gap-3 mb-4">
+                <i data-lucide="alert-circle" class="w-6 h-6 text-red-500"></i>
+                <div>
+                    <h3 class="text-lg font-bold text-brand-dark">Proceed to Next Quiz</h3>
+                    <p class="text-xs text-brand-muted">This will be locked if you proceed to the next quiz.</p>
+                </div>
+            </div>
+            <p class="text-sm text-brand-muted mb-6">
+                If you continue, this quiz will be locked and the reattempt option will be disabled. Your answer review
+                will still be available.
+            </p>
+            <div class="flex gap-3">
+                <button onclick="closeLockWarningModal()"
+                    class="flex-1 py-2.5 px-4 border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-bg transition-colors text-sm">Cancel</button>
+                <button onclick="confirmLockAndReview()"
+                    class="flex-1 py-2.5 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="saveConfirmModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-md w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+            <div class="flex items-start gap-3 mb-4">
+                <i data-lucide="shield-check" class="w-6 h-6 text-brand-teal"></i>
+                <div>
+                    <h3 class="text-lg font-bold text-brand-dark">Confirm Save</h3>
+                    <p class="text-xs text-brand-muted">Lock this case and submit your session data.</p>
+                </div>
+            </div>
+            <p class="text-sm text-brand-muted mb-6">
+                Your answer review has been recorded. Confirming will lock this quiz and save the session, preventing
+                further reattempts until tomorrow.
+            </p>
+            <div class="flex gap-3">
+                <button onclick="closeSaveConfirmModal()"
+                    class="flex-1 py-2.5 px-4 border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-bg transition-colors text-sm">Go
+                    Back</button>
+                <button onclick="confirmSaveSession()"
+                    class="flex-1 py-2.5 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">Lock
+                    & Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sessionSavedModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-md w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+            <div class="flex items-start gap-3 mb-4">
+                <i data-lucide="check-circle" class="w-6 h-6 text-brand-teal"></i>
+                <div>
+                    <h3 class="text-lg font-bold text-brand-dark">Session Saved</h3>
+                    <p class="text-xs text-brand-muted">Your quiz progress has been recorded successfully.</p>
+                </div>
+            </div>
+            <p id="sessionSavedMessage" class="text-sm text-brand-muted mb-6"></p>
+            <div class="flex gap-3">
+                <button onclick="closeSessionSavedModal()"
+                    class="flex-1 py-2.5 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reviewModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-3xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
+            <div class="flex items-center justify-between gap-3 mb-4">
+                <div class="flex items-center gap-3 text-brand-teal">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                    <div>
+                        <h3 class="text-lg font-bold">Review Answers</h3>
+                        <p class="text-xs text-brand-muted">Preview your accuracy and decision latency.</p>
+                    </div>
+                </div>
+                <button onclick="closeReviewModal()" class="text-brand-dark hover:text-brand-teal">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="reviewModalContent" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
+            <div class="flex gap-3 mt-4">
+                <button onclick="closeReviewModal()"
+                    class="flex-1 py-2.5 px-4 border-2 border-brand-mint text-brand-tealDark font-bold rounded-xl hover:bg-brand-bg transition-colors text-sm">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="susModal"
+        class="fixed inset-0 bg-brand-dark/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-2xl border-2 border-brand-mint max-w-2xl w-full p-6 shadow-2xl animate-[slideUpFade_0.2s_ease-out]">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="text-lg font-bold text-brand-dark flex items-center gap-2 text-brand-teal">
                     <i data-lucide="clipboard-check" class="w-5 h-5"></i> System Usability Scale (SUS)
                 </h3>
-                <span class="px-3 py-1 bg-brand-accent/10 text-brand-accent text-xs font-bold rounded-full uppercase tracking-wider">Day 3 Final Requirement</span>
+                <span
+                    class="px-3 py-1 bg-brand-accent/10 text-brand-accent text-xs font-bold rounded-full uppercase tracking-wider">Day
+                    3 Final Requirement</span>
             </div>
             <p class="text-xs text-brand-muted mb-4 pb-4 border-b border-brand-bg">
-                Methodology Step 4: Please rate the platform's student-friendliness. (Scale: 1 = Strongly Disagree, 5 = Strongly Agree). You must complete this to submit your final session data.
+                Methodology Step 4: Please rate the platform's student-friendliness. (Scale: 1 = Strongly Disagree, 5 =
+                Strongly Agree). You must complete this to submit your final session data.
             </p>
             <div id="susQuestionsWrapper" class="space-y-4 mb-6 max-h-[50vh] overflow-y-auto pr-2"></div>
             <div class="flex gap-3 border-t border-brand-mint pt-4">
-                <button onclick="submitFinalSessionWithSUS()" class="w-full py-3 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">
+                <button onclick="submitFinalSessionWithSUS()"
+                    class="w-full py-3 px-4 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl transition-colors text-sm">
                     Submit Survey & Conclude Testing Protocol
                 </button>
             </div>
@@ -184,19 +322,23 @@
                 Branching-Scenario <span class="text-brand-teal">Emergency Triage</span>
             </h1>
             <p class="text-lg text-brand-muted max-w-2xl mx-auto font-medium">
-                Bridging the clinical theory-practice gap through interactive Finite State Machine (FSM) models and precise decision latency telemetry.
+                Bridging the clinical theory-practice gap through interactive Finite State Machine (FSM) models and
+                precise decision latency telemetry.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div class="premium-card premium-card-hover p-8 cursor-pointer flex flex-col justify-between" onclick="showView('consentView')">
+            <div class="premium-card premium-card-hover p-8 cursor-pointer flex flex-col justify-between"
+                onclick="showView('consentView')">
                 <div>
-                    <div class="w-14 h-14 rounded-2xl bg-brand-mintLight flex items-center justify-center text-brand-teal mb-6">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-brand-mintLight flex items-center justify-center text-brand-teal mb-6">
                         <i data-lucide="play-circle" class="w-8 h-8"></i>
                     </div>
                     <h2 class="text-2xl font-bold text-brand-dark mb-3">Student Simulator</h2>
                     <p class="text-brand-muted mb-6 leading-relaxed">
-                        Enter a safe-to-fail clinical scenario. Your decision accuracy, path variations, and hesitation patterns will be tracked dynamically.
+                        Enter a safe-to-fail clinical scenario. Your decision accuracy, path variations, and hesitation
+                        patterns will be tracked dynamically.
                     </p>
                 </div>
                 <div class="space-y-3 pt-4 border-t border-brand-mintLight">
@@ -209,14 +351,17 @@
                 </div>
             </div>
 
-            <div class="premium-card premium-card-hover p-8 cursor-pointer flex flex-col justify-between" onclick="showView('loginView')">
+            <div class="premium-card premium-card-hover p-8 cursor-pointer flex flex-col justify-between"
+                onclick="showView('loginView')">
                 <div>
-                    <div class="w-14 h-14 rounded-2xl bg-brand-mintLight flex items-center justify-center text-brand-teal mb-6">
+                    <div
+                        class="w-14 h-14 rounded-2xl bg-brand-mintLight flex items-center justify-center text-brand-teal mb-6">
                         <i data-lucide="line-chart" class="w-8 h-8"></i>
                     </div>
                     <h2 class="text-2xl font-bold text-brand-dark mb-3">Instructor Dashboard</h2>
                     <p class="text-brand-muted mb-6 leading-relaxed">
-                        Access detailed learning analytics, map structural bottleneck heatmaps, and assess individual/aggregate path optimization metrics.
+                        Access detailed learning analytics, map structural bottleneck heatmaps, and assess
+                        individual/aggregate path optimization metrics.
                     </p>
                 </div>
                 <div class="space-y-3 pt-4 border-t border-brand-mintLight">
@@ -231,46 +376,61 @@
         </div>
 
         <div class="text-center">
-            <span class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-brand-mint text-xs font-semibold tracking-wider text-brand-tealDark uppercase rounded-full shadow-sm">
+            <span
+                class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-brand-mint text-xs font-semibold tracking-wider text-brand-tealDark uppercase rounded-full shadow-sm">
                 <i data-lucide="database" class="w-3.5 h-3.5"></i> FSM State engine active
             </span>
         </div>
     </main>
 
     <main id="consentView" class="view-frame w-full max-w-2xl">
-        <button onclick="showView('homeView')" class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
+        <button onclick="showView('homeView')"
+            class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main Menu
         </button>
 
         <div class="premium-card p-8 bg-white">
             <div class="text-center mb-6">
-                <span class="bg-brand-mintLight text-brand-tealDark text-xs font-semibold px-3 py-1 rounded-full uppercase">Student Research Gateway</span>
+                <span
+                    class="bg-brand-mintLight text-brand-tealDark text-xs font-semibold px-3 py-1 rounded-full uppercase">Student
+                    Research Gateway</span>
                 <h2 class="text-2xl font-bold text-brand-dark mt-3">Digital Informed Consent Form</h2>
             </div>
-            
-            <div class="text-sm text-brand-muted space-y-4 max-h-72 overflow-y-auto p-5 bg-brand-bg rounded-lg border border-brand-mint mb-6">
+
+            <div
+                class="text-sm text-brand-muted space-y-4 max-h-72 overflow-y-auto p-5 bg-brand-bg rounded-lg border border-brand-mint mb-6">
                 <p class="font-bold text-brand-dark">Project Title: TriageSim Branching-Scenario Simulation Engine</p>
-                <p><strong>Introduction:</strong> You are being invited to participate in an evaluation study tracking the efficacy of non-linear branching engines in medical triage training. Your participation is entirely autonomous and voluntary.</p>
-                <p><strong>Procedure:</strong> If you choose to participate, you will complete 3 simulated emergency triage cases over the course of 3 days. The system will record background interaction telemetry (decision hesitation times and path choices) to assess performance progression.</p>
-                <p><strong>Data Confidentiality:</strong> All recorded metrics are processed solely for statistical verification. Your identity traits will be decoupled from aggregate research papers.</p>
-                <p><strong>Right to Withdraw:</strong> You maintain the unconditional right to abort or terminate your simulation session at any timeline marker without administrative penalty.</p>
+                <p><strong>Introduction:</strong> You are being invited to participate in an evaluation study tracking
+                    the efficacy of non-linear branching engines in medical triage training. Your participation is
+                    entirely autonomous and voluntary.</p>
+                <p><strong>Procedure:</strong> If you choose to participate, you will complete 3 simulated emergency
+                    triage cases over the course of 3 days. The system will record background interaction telemetry
+                    (decision hesitation times and path choices) to assess performance progression.</p>
+                <p><strong>Data Confidentiality:</strong> All recorded metrics are processed solely for statistical
+                    verification. Your identity traits will be decoupled from aggregate research papers.</p>
+                <p><strong>Right to Withdraw:</strong> You maintain the unconditional right to abort or terminate your
+                    simulation session at any timeline marker without administrative penalty.</p>
             </div>
 
             <div class="flex items-start mb-6 gap-3 p-4 bg-white border border-brand-mint rounded-xl">
-                <input id="consentCheckbox" type="checkbox" onchange="toggleConsent(this)" class="mt-1 w-5 h-5 text-brand-teal bg-gray-100 border-gray-300 rounded focus:ring-brand-teal">
+                <input id="consentCheckbox" type="checkbox" onchange="toggleConsent(this)"
+                    class="mt-1 w-5 h-5 text-brand-teal bg-gray-100 border-gray-300 rounded focus:ring-brand-teal">
                 <label for="consentCheckbox" class="text-sm text-brand-dark font-medium select-none cursor-pointer">
-                    I explicitly declare that I have read the conditions above and give my full consent to participate in this study.
+                    I explicitly declare that I have read the conditions above and give my full consent to participate
+                    in this study.
                 </label>
             </div>
 
-            <button id="btnAcceptConsent" onclick="acceptConsentForm()" disabled class="w-full py-3.5 px-4 bg-slate-300 text-slate-500 font-bold rounded-xl transition duration-200 cursor-not-allowed">
+            <button id="btnAcceptConsent" onclick="acceptConsentForm()" disabled
+                class="w-full py-3.5 px-4 bg-slate-300 text-slate-500 font-bold rounded-xl transition duration-200 cursor-not-allowed">
                 Proceed to Profile Setup
             </button>
         </div>
     </main>
 
     <main id="studentSetupView" class="view-frame w-full max-w-md">
-        <button onclick="showView('homeView')" class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
+        <button onclick="showView('homeView')"
+            class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main Menu
         </button>
 
@@ -287,37 +447,78 @@
 
             <div class="p-6 space-y-5 bg-white">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student Name <span class="text-red-500">*</span></label>
-                    <input type="text" id="studentInputName" required class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50" placeholder="e.g. John Doe">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student Name
+                        <span class="text-red-500">*</span></label>
+                    <input type="text" id="studentInputName" required
+                        class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50"
+                        placeholder="e.g. John Doe">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student ID <span class="text-red-500">*</span></label>
-                    <input type="text" id="studentInputId" oninput="checkStudentHistory(this)" required class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50" placeholder="e.g. STU2026118">
-                    <p class="text-[10px] text-brand-muted mt-1 font-medium">Entering your ID will automatically update your scenario availability.</p>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Student ID
+                        <span class="text-red-500">*</span></label>
+                    <input type="text" id="studentInputId" oninput="checkStudentHistory(this)" required
+                        class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/50"
+                        placeholder="e.g. STU2026118">
+                    <p class="text-[10px] text-brand-muted mt-1 font-medium">Entering your ID will automatically update
+                        your scenario availability.</p>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Cohort / Section</label>
-                    <select id="studentInputCohort" class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all bg-white">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Cohort /
+                        Section</label>
+                    <select id="studentInputCohort"
+                        class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all bg-white">
                         <option value="NURS-301-A">Section NURS-301-A (Mon/Wed)</option>
                         <option value="NURS-301-B">Section NURS-301-B (Tue/Thu)</option>
                         <option value="Independent">Independent Learner</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Methodology Clinical Scenario</label>
-                    <select id="studentInputScenario" class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all bg-white">
-                        <option value="START_NODE" data-original-text="Scenario A: Mass Casualty (Trauma/Respiratory)">Scenario A: Mass Casualty (Trauma/Respiratory)</option>
-                        <option value="SCENARIO_B_START" data-original-text="Scenario B: Structural Fire (Ambulatory Check)">Scenario B: Structural Fire (Ambulatory Check)</option>
-                        <option value="SCENARIO_C_START" data-original-text="Scenario C: Vehicle Collision (No Respiration)">Scenario C: Vehicle Collision (No Respiration)</option>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Methodology
+                        Day</label>
+                    <select id="studentInputDay" onchange="updateScenarioOptionsByDay()"
+                        class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all bg-white">
+                        <option value="1">Day 1</option>
+                        <option value="2" disabled>Day 2</option>
+                        <option value="3" disabled>Day 3</option>
+                    </select>
+                    <p class="text-[10px] text-brand-muted mt-1 font-medium">Day 2 and Day 3 are locked until Day 1 is
+                        completed for this student.</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Methodology
+                        Clinical Scenario</label>
+                    <select id="studentInputScenario"
+                        class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all bg-white">
+                        <option value="START_NODE" data-original-text="Scenario A: Mass Casualty (Trauma/Respiratory)"
+                            data-day="1">
+                            Scenario A: Mass Casualty (Trauma/Respiratory)</option>
+                        <option value="SCENARIO_B_START"
+                            data-original-text="Scenario B: Structural Fire (Ambulatory Check)" data-day="2">Scenario B:
+                            Structural
+                            Fire (Ambulatory Check)</option>
+                        <option value="SCENARIO_C_START"
+                            data-original-text="Scenario C: Vehicle Collision (No Respiration)" data-day="2">Scenario C:
+                            Vehicle
+                            Collision (No Respiration)</option>
+                        <option value="SCENARIO_D_START"
+                            data-original-text="Scenario D: Factory Explosion (RPM Sequence)" data-day="2">Scenario D:
+                            Factory
+                            Explosion (RPM Sequence)</option>
+                        <option value="SCENARIO_E_START"
+                            data-original-text="Scenario E: The Structural Collapse (Post-Test)" data-day="3">Scenario
+                            E: The
+                            Structural Collapse (Post-Test)</option>
                     </select>
                 </div>
 
-                <div id="statusAlertBox" class="hidden p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-start gap-2.5">
+                <div id="statusAlertBox"
+                    class="hidden p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-start gap-2.5">
                     <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
                     <span id="statusAlertText"></span>
                 </div>
 
-                <button onclick="startStudentMode()" class="w-full bg-brand-accent hover:bg-brand-tealDark text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-accent/20 transition-all">
+                <button onclick="startStudentMode()"
+                    class="w-full bg-brand-accent hover:bg-brand-tealDark text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-accent/20 transition-all">
                     <span>Launch Simulator</span>
                     <i data-lucide="play" class="w-4 h-4"></i>
                 </button>
@@ -326,7 +527,8 @@
     </main>
 
     <main id="loginView" class="view-frame w-full max-w-md">
-        <button onclick="showView('homeView')" class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
+        <button onclick="showView('homeView')"
+            class="mb-6 flex items-center gap-2 text-brand-tealDark hover:text-brand-teal font-semibold transition-colors text-sm">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main Menu
         </button>
 
@@ -343,24 +545,34 @@
 
             <div class="p-6 space-y-5 bg-white">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Academic Email</label>
-                    <input type="email" id="loginEmail" class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all" value="p.williams@university.edu">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Academic
+                        Email</label>
+                    <input type="email" id="loginEmail"
+                        class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all"
+                        value="p.williams@university.edu">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Password</label>
-                    <input type="password" id="loginPassword" class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all" value="password123">
+                    <label
+                        class="block text-xs font-bold uppercase tracking-wider text-brand-dark mb-2">Password</label>
+                    <input type="password" id="loginPassword"
+                        class="w-full px-4 py-3 border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all"
+                        value="password123">
                 </div>
 
-                <button onclick="executeLogin()" class="w-full bg-brand-teal hover:bg-brand-tealDark text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-teal/20 transition-all">
+                <button onclick="executeLogin()"
+                    class="w-full bg-brand-teal hover:bg-brand-tealDark text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-brand-teal/20 transition-all">
                     <span>Authenticate Account</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
 
                 <div class="p-4 bg-brand-bg border border-brand-mint rounded-xl space-y-2">
-                    <span class="block text-xs font-bold text-brand-tealDark uppercase tracking-wider">Demo Access Profiles</span>
+                    <span class="block text-xs font-bold text-brand-tealDark uppercase tracking-wider">Demo Access
+                        Profiles</span>
                     <div class="text-xs space-y-1 text-brand-dark">
-                        <p class="font-semibold">p.williams@university.edu <span class="font-normal text-brand-muted">(Dr. Patricia Williams)</span></p>
-                        <p class="font-semibold">r.kim@university.edu <span class="font-normal text-brand-muted">(Prof. Robert Kim)</span></p>
+                        <p class="font-semibold">p.williams@university.edu <span
+                                class="font-normal text-brand-muted">(Dr. Patricia Williams)</span></p>
+                        <p class="font-semibold">r.kim@university.edu <span class="font-normal text-brand-muted">(Prof.
+                                Robert Kim)</span></p>
                     </div>
                 </div>
             </div>
@@ -376,7 +588,8 @@
                 </h1>
                 <p class="text-sm text-brand-muted">Execute optimal protocols rapidly to optimize Path Efficiency.</p>
             </div>
-            <button onclick="confirmExitSimulation()" class="self-start md:self-auto px-4 py-2 border-2 border-brand-mint bg-white text-brand-tealDark font-bold rounded-xl hover:bg-brand-mintLight transition-colors flex items-center gap-2 text-sm">
+            <button onclick="confirmExitSimulation()"
+                class="self-start md:self-auto px-4 py-2 border-2 border-brand-mint bg-white text-brand-tealDark font-bold rounded-xl hover:bg-brand-mintLight transition-colors flex items-center gap-2 text-sm">
                 <i data-lucide="log-out" class="w-4 h-4"></i> Exit Scenario
             </button>
         </div>
@@ -387,20 +600,26 @@
                     <div class="flex items-center justify-between border-b border-brand-bg pb-4">
                         <div class="flex items-center gap-2.5">
                             <i data-lucide="clipboard-list" class="text-brand-teal w-5 h-5"></i>
-                            <span id="scenarioTitle" class="font-bold text-brand-dark">Active Case: Disaster Area Alpha</span>
+                            <span id="scenarioTitle" class="font-bold text-brand-dark">Active Case: Disaster Area
+                                Alpha</span>
                         </div>
-                        <span class="px-3 py-1 bg-brand-mintLight text-brand-tealDark font-bold text-xs rounded-full uppercase tracking-wider">START Protocol</span>
+                        <span
+                            class="px-3 py-1 bg-brand-mintLight text-brand-tealDark font-bold text-xs rounded-full uppercase tracking-wider">START
+                            Protocol</span>
                     </div>
 
                     <div class="space-y-4">
-                        <span class="text-xs font-bold text-brand-tealDark uppercase tracking-wider block">Clinical Presentation / Prompt</span>
-                        <div id="nodePrompt" class="p-5 bg-brand-bg rounded-xl text-brand-dark font-medium border-l-4 border-brand-teal text-base leading-relaxed">
+                        <span class="text-xs font-bold text-brand-tealDark uppercase tracking-wider block">Clinical
+                            Presentation / Prompt</span>
+                        <div id="nodePrompt"
+                            class="p-5 bg-brand-bg rounded-xl text-brand-dark font-medium border-l-4 border-brand-teal text-base leading-relaxed">
                             Loading triage assessment data...
                         </div>
                     </div>
 
                     <div class="space-y-4">
-                        <span class="text-xs font-bold text-brand-tealDark uppercase tracking-wider block">Determine Next Step</span>
+                        <span class="text-xs font-bold text-brand-tealDark uppercase tracking-wider block">Determine
+                            Next Step</span>
                         <div id="optionsWrapper" class="flex flex-col gap-3"></div>
                     </div>
                 </div>
@@ -415,11 +634,14 @@
                     <div class="space-y-3.5">
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-brand-muted">Participant Name:</span>
-                            <span id="telemetryName" class="font-bold text-brand-dark text-xs truncate max-w-[120px] text-right">Live Participant</span>
+                            <span id="telemetryName"
+                                class="font-bold text-brand-dark text-xs truncate max-w-[120px] text-right">Live
+                                Participant</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-brand-muted">Clinical FSM Node:</span>
-                            <span id="telemetryState" class="font-mono text-brand-teal font-bold bg-brand-bg px-2.5 py-0.5 rounded-lg text-xs">START_NODE</span>
+                            <span id="telemetryState"
+                                class="font-mono text-brand-teal font-bold bg-brand-bg px-2.5 py-0.5 rounded-lg text-xs">START_NODE</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-brand-muted">Decision Latency (L):</span>
@@ -427,7 +649,8 @@
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-brand-muted">Protocol Deviations (E-Penalty):</span>
-                            <span id="telemetryDeviations" class="font-bold text-brand-dark bg-brand-bg w-7 h-7 flex items-center justify-center rounded-full text-xs">0</span>
+                            <span id="telemetryDeviations"
+                                class="font-bold text-brand-dark bg-brand-bg w-7 h-7 flex items-center justify-center rounded-full text-xs">0</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-brand-muted">Path Efficiency (E):</span>
@@ -437,7 +660,8 @@
 
                     <div class="pt-4 border-t border-brand-bg text-[11px] text-brand-muted leading-relaxed">
                         <p class="font-semibold text-brand-dark mb-1">How telemetry is scored:</p>
-                        Decision Latency (L) is tracked continuously. Taking incorrect paths (deviations) penalizes overall Path Efficiency (E) instantly.
+                        Decision Latency (L) is tracked continuously. Taking incorrect paths (deviations) penalizes
+                        overall Path Efficiency (E) instantly.
                     </div>
                 </div>
             </div>
@@ -456,14 +680,16 @@
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <button onclick="exportToCSV()" class="px-4 py-2 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl text-sm transition-colors flex items-center gap-2">
+                <button onclick="exportToCSV()"
+                    class="px-4 py-2 bg-brand-accent hover:bg-brand-tealDark text-white font-bold rounded-xl text-sm transition-colors flex items-center gap-2">
                     <i data-lucide="download" class="w-4 h-4"></i> Export to Excel/SPSS
                 </button>
                 <div class="text-right hidden md:block border-l border-brand-mint pl-4 ml-2">
                     <p class="text-sm font-bold text-brand-dark">Dr. Patricia Williams</p>
                     <p class="text-xs text-brand-muted">Emergency Dept Advisor</p>
                 </div>
-                <button onclick="showView('homeView')" class="px-4 py-2 bg-brand-bg hover:bg-brand-mint text-brand-tealDark font-bold rounded-xl text-sm transition-colors flex items-center gap-2">
+                <button onclick="showView('homeView')"
+                    class="px-4 py-2 bg-brand-bg hover:bg-brand-mint text-brand-tealDark font-bold rounded-xl text-sm transition-colors flex items-center gap-2">
                     <i data-lucide="log-out" class="w-4 h-4"></i> Logout
                 </button>
             </div>
@@ -490,7 +716,8 @@
                     <i data-lucide="hourglass" class="w-4 h-4 text-brand-teal"></i> Avg Decision Latency (L)
                 </div>
                 <div>
-                    <div id="dash-avg-latency" class="text-3xl font-black text-brand-dark leading-tight mt-2 text-red-500">0s</div>
+                    <div id="dash-avg-latency"
+                        class="text-3xl font-black text-brand-dark leading-tight mt-2 text-red-500">0s</div>
                     <span class="text-[11px] text-brand-muted font-medium">Standard baseline threshold is &lt; 5s</span>
                 </div>
             </div>
@@ -500,7 +727,8 @@
                     <i data-lucide="award" class="w-4 h-4 text-brand-teal"></i> Mean Path Efficiency (E)
                 </div>
                 <div>
-                    <div id="dash-avg-efficiency" class="text-3xl font-black text-brand-dark leading-tight mt-2 text-brand-accent">0%</div>
+                    <div id="dash-avg-efficiency"
+                        class="text-3xl font-black text-brand-dark leading-tight mt-2 text-brand-accent">0%</div>
                     <span class="text-[11px] text-brand-muted font-medium">Ratio of actual to optimal steps</span>
                 </div>
             </div>
@@ -510,7 +738,8 @@
                     <i data-lucide="shield" class="w-4 h-4 text-brand-teal"></i> Diagnostic Accuracy
                 </div>
                 <div>
-                    <div id="dash-avg-accuracy" class="text-3xl font-black text-brand-dark leading-tight mt-2 text-brand-teal">0%</div>
+                    <div id="dash-avg-accuracy"
+                        class="text-3xl font-black text-brand-dark leading-tight mt-2 text-brand-teal">0%</div>
                     <span class="text-[11px] text-brand-muted font-medium">Optimal first-try accuracy</span>
                 </div>
             </div>
@@ -545,35 +774,45 @@
         </div>
 
         <div class="premium-card p-6 bg-white mb-8">
-            
+
             <div class="flex flex-wrap gap-4 items-center justify-between mb-5">
                 <div class="relative flex-1 min-w-[280px]">
-                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted"></i>
-                    <input type="text" id="studentSearch" placeholder="Search student name or ID..." 
-                           class="w-full pl-11 pr-4 py-3 bg-brand-bg border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/70">
+                    <i data-lucide="search"
+                        class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted"></i>
+                    <input type="text" id="studentSearch" placeholder="Search student name or ID..."
+                        class="w-full pl-11 pr-4 py-3 bg-brand-bg border-2 border-brand-mint rounded-xl text-brand-dark font-medium focus:border-brand-teal outline-none transition-all placeholder-brand-muted/70">
                 </div>
 
                 <button type="button" id="toggleFilterBtn" onclick="toggleFilterPanel()"
-                        class="flex items-center gap-2 px-5 py-3 bg-white border-2 border-brand-mint rounded-xl text-brand-tealDark font-bold hover:bg-brand-mintLight transition-colors">
-                    <i data-lucide="settings-2" class="w-4 h-4"></i> Advanced Filters 
-                    <i data-lucide="chevron-down" id="arrowIcon" class="w-4 h-4 transition-transform duration-200 ml-1"></i>
+                    class="flex items-center gap-2 px-5 py-3 bg-white border-2 border-brand-mint rounded-xl text-brand-tealDark font-bold hover:bg-brand-mintLight transition-colors">
+                    <i data-lucide="settings-2" class="w-4 h-4"></i> Advanced Filters
+                    <i data-lucide="chevron-down" id="arrowIcon"
+                        class="w-4 h-4 transition-transform duration-200 ml-1"></i>
                 </button>
             </div>
 
             <div id="filterPanel" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out mb-0">
-                <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-5 bg-brand-bg border-2 border-brand-mint rounded-xl mb-5">
+                <div
+                    class="p-5 grid grid-cols-1 md:grid-cols-2 gap-5 bg-brand-bg border-2 border-brand-mint rounded-xl mb-5">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-tealDark mb-2">Simulation Target</label>
-                        <select id="filterScenario" class="w-full px-4 py-2.5 bg-white border-2 border-brand-mint rounded-lg text-brand-dark font-medium focus:border-brand-teal outline-none cursor-pointer">
+                        <label
+                            class="block text-xs font-bold uppercase tracking-wider text-brand-tealDark mb-2">Simulation
+                            Target</label>
+                        <select id="filterScenario"
+                            class="w-full px-4 py-2.5 bg-white border-2 border-brand-mint rounded-lg text-brand-dark font-medium focus:border-brand-teal outline-none cursor-pointer">
                             <option value="all">✨ All Scenarios</option>
                             <option value="Scenario A">📅 Scenario A (Day 1)</option>
                             <option value="Scenario B">📅 Scenario B (Day 2)</option>
-                            <option value="Scenario C">📅 Scenario C (Day 3)</option>
+                            <option value="Scenario C">📅 Scenario C (Day 2)</option>
+                            <option value="Scenario D">📅 Scenario D (Day 2)</option>
+                            <option value="Scenario E">📅 Scenario E (Day 3)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-tealDark mb-2">Sort Records By</label>
-                        <select id="sortRecords" class="w-full px-4 py-2.5 bg-white border-2 border-brand-mint rounded-lg text-brand-dark font-medium focus:border-brand-teal outline-none cursor-pointer">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-brand-tealDark mb-2">Sort
+                            Records By</label>
+                        <select id="sortRecords"
+                            class="w-full px-4 py-2.5 bg-white border-2 border-brand-mint rounded-lg text-brand-dark font-medium focus:border-brand-teal outline-none cursor-pointer">
                             <option value="default">🕒 Date (Newest First)</option>
                             <option value="name-asc">🔤 Alphabetical (A - Z)</option>
                             <option value="name-desc">🔤 Alphabetical (Z - A)</option>
@@ -600,7 +839,7 @@
                         </tr>
                     </thead>
                     <tbody id="studentTableBody" class="divide-y divide-brand-mint bg-white">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -682,7 +921,7 @@
                 prompt: "Assessment Complete: Protocol breakdown. In START triage, if a patient is ambulatory (able to walk), they are immediately tagged GREEN without proceeding down the RPM checklist."
             },
 
-            // --- NEW: SCENARIO C (Day 3) ---
+            // --- NEW: SCENARIO C (Day 2) ---
             SCENARIO_C_START: {
                 prompt: "Emergency Triage Area (Scenario C): Vehicle Collision. You find an adult patient ejected from the vehicle. They are completely unresponsive, apneic, and pulseless.",
                 options: [
@@ -718,6 +957,103 @@
                 textColor: "text-red-100",
                 tagName: "Critical Error (Red Tagged a Deceased Patient)",
                 prompt: "Assessment Complete: A patient who does not breathe even after airway repositioning cannot be tagged Red. They must be tagged Black."
+            },
+
+            SCENARIO_D_START: {
+                prompt: "Emergency Triage Area (Scenario D): Factory Explosion. A patient is on the ground with bilateral leg fractures and is completely unable to stand or walk. What is your immediate next step?",
+                options: [
+                    { text: "Assess the patient's spontaneous respiratory status", nextState: "SCENARIO_D_RESP", optimal: true },
+                    { text: "Check capillary refill time", nextState: "SCENARIO_D_WRONG", optimal: false },
+                    { text: "Tag as DELAYED (YELLOW TAG) immediately since they cannot walk", nextState: "SCENARIO_D_WRONG_2", optimal: false }
+                ]
+            },
+            SCENARIO_D_RESP: {
+                prompt: "Respirations are steady at 18 breaths per minute (Normal is < 30). What is your next protocol investigation stage?",
+                options: [
+                    { text: "Measure peripheral perfusion via capillary refill time", nextState: "SCENARIO_D_PERF", optimal: true },
+                    { text: "Request the patient follow basic command signals", nextState: "SCENARIO_D_WRONG", optimal: false },
+                    { text: "Tag as MINOR (GREEN TAG)", nextState: "SCENARIO_D_WRONG_2", optimal: false }
+                ]
+            },
+            SCENARIO_D_PERF: {
+                prompt: "Radial pulse is present and strong. Capillary refill time (CRT) is evaluated at 1.5 seconds. What is the final step in the START protocol?",
+                options: [
+                    { text: "Assess cognitive/mental status (e.g., 'Squeeze my hand')", nextState: "SCENARIO_D_MENTAL", optimal: true },
+                    { text: "Tag as IMMEDIATE (RED TAG)", nextState: "SCENARIO_D_WRONG_2", optimal: false }
+                ]
+            },
+            SCENARIO_D_MENTAL: {
+                prompt: "The patient is alert, oriented, and successfully follows your command to squeeze your hands. What is the appropriate triage designation?",
+                options: [
+                    { text: "Classify patient as DELAYED (YELLOW TAG)", nextState: "RESULT_YELLOW_D", optimal: true },
+                    { text: "Classify patient as MINOR (GREEN TAG)", nextState: "SCENARIO_D_WRONG_2", optimal: false }
+                ]
+            },
+            RESULT_YELLOW_D: {
+                isTerminal: true,
+                tagColor: "bg-triage-yellow",
+                textColor: "text-yellow-900",
+                tagName: "Delayed (Yellow Tag)",
+                prompt: "Assessment Complete: Correct path! The patient cannot walk, but cleared all RPM (Respirations, Perfusion, Mental Status) benchmarks. They require a Yellow Tag."
+            },
+            SCENARIO_D_WRONG: {
+                isTerminal: true,
+                tagColor: "bg-triage-black",
+                textColor: "text-red-200",
+                tagName: "Sequence Error",
+                prompt: "Assessment Complete: Protocol breakdown. You must follow the RPM sequence exactly. Skipping steps risks missing hidden shock indicators."
+            },
+            SCENARIO_D_WRONG_2: {
+                isTerminal: true,
+                tagColor: "bg-triage-black",
+                textColor: "text-red-200",
+                tagName: "Misclassification Error",
+                prompt: "Assessment Complete: Incorrect Tag. You failed to apply the START criteria correctly based on the current indicators."
+            },
+
+            SCENARIO_E_START: {
+                prompt: "The Structural Collapse (Scenario E): You find a patient trapped under heavy concrete debris. They have sustained a massive crush injury to the pelvis. Bystanders have applied a tourniquet. What is your next protocol investigation stage?",
+                options: [
+                    { text: "Assess the patient's spontaneous respiratory status", nextState: "SCENARIO_E_RESPIRATIONS", optimal: true },
+                    { text: "Measure peripheral perfusion via capillary refill time", nextState: "SCENARIO_E_PERFUSION", optimal: false },
+                    { text: "Request the patient follow basic command signals ('Squeeze my hand')", nextState: "SCENARIO_E_MENTAL", optimal: false }
+                ]
+            },
+            SCENARIO_E_RESPIRATIONS: {
+                prompt: "You clear concrete dust away to evaluate breathing. The patient is gasping aggressively, with a respiratory rate of 38 breaths per minute. Applying the START standard, what is the triage action?",
+                options: [
+                    { text: "Immediately tag patient as IMMEDIATE (RED TAG)", nextState: "RESULT_RED_E", optimal: true },
+                    { text: "Ignore the breathing rate and check peripheral pulse/capillary refill", nextState: "SCENARIO_E_PERFUSION", optimal: false },
+                    { text: "Assess cognitive response by questioning standard commands", nextState: "SCENARIO_E_MENTAL", optimal: false }
+                ]
+            },
+            SCENARIO_E_PERFUSION: {
+                prompt: "You bypass respirations and assess capillary refill on an exposed hand. CRT is measured at 4.2 seconds (severe delay). What is the appropriate triage outcome?",
+                options: [
+                    { text: "Immediately classify patient as IMMEDIATE (RED TAG)", nextState: "RESULT_RED_E", optimal: true },
+                    { text: "Execute cognitive command assessments to confirm mental state", nextState: "SCENARIO_E_MENTAL", optimal: false }
+                ]
+            },
+            SCENARIO_E_MENTAL: {
+                prompt: "The patient's eyes are open but they are completely unresponsive to your commands to move or blink intentionally. What is the appropriate triage designation?",
+                options: [
+                    { text: "Classify patient as IMMEDIATE (RED TAG)", nextState: "RESULT_RED_E", optimal: true },
+                    { text: "Classify patient as DELAYED (YELLOW TAG)", nextState: "RESULT_YELLOW_E", optimal: false }
+                ]
+            },
+            RESULT_RED_E: {
+                isTerminal: true,
+                tagColor: "bg-triage-red",
+                textColor: "text-red-100",
+                tagName: "Immediate (Red Tag)",
+                prompt: "Assessment Complete: Correct! Just like Day 1, severe tachypnea (>30/min) dictates an immediate RED tag. Your diagnostic pathway is clinically accurate!"
+            },
+            RESULT_YELLOW_E: {
+                isTerminal: true,
+                tagColor: "bg-triage-yellow",
+                textColor: "text-yellow-900",
+                tagName: "Delayed (Yellow Tag)",
+                prompt: "Assessment Complete: Sub-optimal classification. A patient showing a respiratory rate >30/min, poor perfusion, or mental confusion cannot be tagged yellow. They require an immediate RED tag."
             }
         };
 
@@ -755,9 +1091,10 @@
         let nodeDisplayTime = 0;
         let latencyTimer = null;
         let deviations = 0;
-        let answerHistory = []; 
+        let answerHistory = [];
         let currentSession = {};
-        
+        let shouldLockAfterReview = false;
+
         let isFinalDay = false;
 
         function initSUSForm() {
@@ -848,14 +1185,14 @@
         function exportToCSV() {
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Date Taken,Student ID,Name,Cohort,Scenario,Decision Latency (s),Path Efficiency (%),Accuracy (%),SUS Final Score,SUS Q1,SUS Q2,SUS Q3,SUS Q4,SUS Q5,SUS Q6,SUS Q7,SUS Q8,SUS Q9,SUS Q10\n";
-            
+
             appState.studentRecords.forEach(r => {
                 let dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString() : new Date().toLocaleDateString();
                 let id = r.student_id || r.id || 'N/A';
                 let name = r.student_name || r.name || 'Unknown';
                 let scenario = r.scenario || 'Scenario A';
                 let sus = r.sus_score || 'N/A';
-                
+
                 let qResponses = Array(10).fill('N/A');
                 if (r.sus_responses) {
                     try {
@@ -865,7 +1202,7 @@
                         }
                     } catch(e) {}
                 }
-                
+
                 let row = `${dateStr},${id},"${name}","${r.cohort}","${scenario}",${r.latency},${r.efficiency},${r.accuracy},${sus},${qResponses.join(',')}`;
                 csvContent += row + "\n";
             });
@@ -879,21 +1216,67 @@
 
         function checkStudentHistory(inputField) {
             const id = inputField.value.trim();
-            if (!id) return;
-            
+            const daySelect = document.getElementById('studentInputDay');
+            const scenarioOptions = document.getElementById('studentInputScenario').options;
+
             const pastRecords = appState.studentRecords.filter(r => (r.student_id === id || r.id === id));
-            const options = document.getElementById('studentInputScenario').options;
-            
-            for (let i = 0; i < options.length; i++) {
-                const shortTitle = options[i].getAttribute('data-original-text').split(' (')[0];
+            const hasCompletedDay1 = pastRecords.some(r => r.scenario && r.scenario.startsWith('Scenario A'));
+
+            for (let i = 0; i < scenarioOptions.length; i++) {
+                const shortTitle = scenarioOptions[i].getAttribute('data-original-text').split(' (')[0];
                 const alreadyDid = pastRecords.some(r => r.scenario.includes(shortTitle));
-                
+
                 if (alreadyDid) {
-                    options[i].text = shortTitle + " - ✓ (COMPLETED)";
-                    options[i].disabled = true;
+                    scenarioOptions[i].text = shortTitle + " - ✓ (COMPLETED)";
                 } else {
-                    options[i].text = options[i].getAttribute('data-original-text');
-                    options[i].disabled = false;
+                    scenarioOptions[i].text = scenarioOptions[i].getAttribute('data-original-text');
+                }
+            }
+
+            if (daySelect) {
+                daySelect.querySelector('option[value="2"]').disabled = !hasCompletedDay1;
+                daySelect.querySelector('option[value="3"]').disabled = !hasCompletedDay1;
+
+                if (!hasCompletedDay1 && (daySelect.value === '2' || daySelect.value === '3')) {
+                    daySelect.value = '1';
+                }
+
+                if (hasCompletedDay1 && daySelect.value === '1') {
+                    daySelect.value = '2';
+                }
+            }
+
+            updateScenarioOptionsByDay();
+        }
+
+        function updateScenarioOptionsByDay() {
+            const daySelect = document.getElementById('studentInputDay');
+            const scenarioSelect = document.getElementById('studentInputScenario');
+            if (!daySelect || !scenarioSelect) return;
+
+            const selectedDay = parseInt(daySelect.value, 10);
+            let firstSelectableIndex = -1;
+
+            for (let i = 0; i < scenarioSelect.options.length; i++) {
+                const option = scenarioSelect.options[i];
+                const optionDay = parseInt(option.getAttribute('data-day'), 10);
+                const isCompleted = option.text.includes('✓ (COMPLETED)');
+
+                if (optionDay !== selectedDay) {
+                    option.hidden = true;
+                    option.disabled = true;
+                } else {
+                    option.hidden = false;
+                    option.disabled = isCompleted;
+                    if (!option.disabled && firstSelectableIndex === -1) {
+                        firstSelectableIndex = i;
+                    }
+                }
+            }
+
+            if (scenarioSelect.selectedIndex < 0 || scenarioSelect.options[scenarioSelect.selectedIndex].hidden || scenarioSelect.options[scenarioSelect.selectedIndex].disabled) {
+                if (firstSelectableIndex >= 0) {
+                    scenarioSelect.selectedIndex = firstSelectableIndex;
                 }
             }
         }
@@ -910,20 +1293,29 @@
                 return;
             }
 
+            const daySelect = document.getElementById('studentInputDay');
             const scenarioSelect = document.getElementById('studentInputScenario');
             const selectedScenario = scenarioSelect.value;
             const fullScenarioText = scenarioSelect.options[scenarioSelect.selectedIndex].text;
-            
-            if(scenarioSelect.options[scenarioSelect.selectedIndex].disabled) {
+            const selectedDay = parseInt(daySelect.value, 10);
+            const selectedOptionDay = parseInt(scenarioSelect.options[scenarioSelect.selectedIndex].getAttribute('data-day'), 10);
+
+            if (scenarioSelect.options[scenarioSelect.selectedIndex].disabled) {
                 alertText.innerText = "Error: You have already completed this scenario on a previous day.";
                 alertBox.classList.remove('hidden');
                 return;
             }
 
-            const shortScenarioTitle = fullScenarioText.split(' (')[0]; 
+            if (selectedDay !== selectedOptionDay) {
+                alertText.innerText = "Error: Please choose a scenario that matches the selected day.";
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            const shortScenarioTitle = fullScenarioText.split(' (')[0];
 
             const studentPastRecords = appState.studentRecords.filter(r => (r.student_id === inputId || r.id === inputId));
-            
+
             if (studentPastRecords.length >= 3) {
                 alertText.innerText = "Research Concluded: You have successfully completed all 3 days of testing! Thank you for participating.";
                 alertBox.classList.remove('hidden');
@@ -943,11 +1335,11 @@
             }
 
             isFinalDay = (studentPastRecords.length === 2);
-            alertBox.classList.add('hidden'); 
+            alertBox.classList.add('hidden');
 
             currentState = selectedScenario;
             deviations = 0;
-            answerHistory = []; 
+            answerHistory = [];
 
             const inputCohort = document.getElementById('studentInputCohort').value;
             currentSession = {
@@ -955,8 +1347,10 @@
                 name: inputName,
                 cohort: inputCohort,
                 scenarioName: shortScenarioTitle,
+                startState: selectedScenario,
                 cumulativeLatency: 0, steps: 0, optimalSteps: 0,
-                finalLatency: 0, finalEfficiency: 0, finalAccuracy: 0
+                finalLatency: 0, finalEfficiency: 0, finalAccuracy: 0,
+                attemptsRemaining: 3
             };
 
             document.getElementById('telemetryName').innerText = currentSession.name;
@@ -1065,11 +1459,30 @@
                         </button>
                     `;
                 } else {
-                    buttonHtml = `
-                        <button onclick="submitFinalSessionWithoutSUS()" class="w-full py-3.5 px-4 bg-brand-accent hover:bg-brand-teal text-white font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-accent/10">
-                            <span>Save Session & Return Tomorrow</span>
-                            <i data-lucide="save" class="w-4 h-4"></i>
+                    const reattemptButton = currentSession.attemptsRemaining > 0 ? `
+                        <button onclick="attemptReattempt()" class="w-full py-3.5 px-4 bg-white border-2 border-brand-mint hover:border-brand-teal text-brand-dark font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-sm shadow-brand-mint/10">
+                            <span>Reattempt this Quiz (${currentSession.attemptsRemaining} left)</span>
+                            <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
                         </button>
+                    ` : `
+                        <button disabled class="w-full py-3.5 px-4 bg-slate-200 text-slate-600 font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-sm">
+                            <span>Locked. Continue tomorrow</span>
+                            <i data-lucide="slash" class="w-4 h-4"></i>
+                        </button>
+                    `;
+
+                    buttonHtml = `
+                        <div class="grid gap-3 md:grid-cols-3">
+                            ${reattemptButton}
+                            <button onclick="openReviewModal()" class="w-full py-3.5 px-4 bg-white border-2 border-brand-mint hover:border-brand-teal text-brand-dark font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-sm shadow-brand-mint/10">
+                                <span>Review Answers</span>
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="showLockWarningModal()" class="w-full py-3.5 px-4 bg-brand-accent hover:bg-brand-teal text-white font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-accent/10">
+                                <span>Proceed to Next Quiz</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     `;
                 }
                 document.getElementById('resultModalButtonWrapper').innerHTML = buttonHtml;
@@ -1103,6 +1516,14 @@
 
         function dispatchSessionPayload(payload, successMessage) {
             const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            const finishSave = () => {
+                appState.studentRecords.push(payload);
+                refreshDashboard();
+                document.getElementById('resultModal').classList.add('hidden');
+                document.getElementById('susModal').classList.add('hidden');
+                showSessionSavedModal(successMessage);
+            };
+
             if (csrfMeta && csrfMeta.getAttribute('content')) {
                 fetch('/api/sessions', {
                     method: 'POST',
@@ -1113,26 +1534,91 @@
                     body: JSON.stringify(payload)
                 })
                 .then(response => response.json())
-                .then(data => {
-                    appState.studentRecords.push(payload);
-                    refreshDashboard();
-                    alert(successMessage);
-                    document.getElementById('resultModal').classList.add('hidden');
-                    document.getElementById('susModal').classList.add('hidden');
-                    showView('homeView');
-                })
-                .catch(err => console.error("Database sync exception: ", err));
+                .then(data => finishSave())
+                .catch(err => {
+                    console.error("Database sync exception: ", err);
+                    finishSave();
+                });
             } else {
-                appState.studentRecords.push(payload);
-                refreshDashboard();
-                alert(successMessage + " (Saved Locally)");
-                document.getElementById('resultModal').classList.add('hidden');
-                document.getElementById('susModal').classList.add('hidden');
-                showView('homeView');
+                finishSave();
             }
         }
 
         function submitFinalSessionWithoutSUS() {
+            showLockWarningModal();
+        }
+
+        function attemptReattempt() {
+            if (!currentSession || currentSession.attemptsRemaining <= 0) return;
+            currentSession.attemptsRemaining -= 1;
+            currentState = currentSession.startState;
+            deviations = 0;
+            answerHistory = [];
+            currentSession.cumulativeLatency = 0;
+            currentSession.steps = 0;
+            currentSession.optimalSteps = 0;
+            currentSession.finalLatency = 0;
+            currentSession.finalEfficiency = 0;
+            currentSession.finalAccuracy = 0;
+            document.getElementById('resultModal').classList.add('hidden');
+            renderFSMNode();
+        }
+
+        function showLockWarningModal() {
+            document.getElementById('lockWarningModal').classList.remove('hidden');
+        }
+
+        function closeLockWarningModal() {
+            document.getElementById('lockWarningModal').classList.add('hidden');
+        }
+
+        function confirmLockAndReview() {
+            closeLockWarningModal();
+            shouldLockAfterReview = true;
+            openReviewModal();
+        }
+
+        function lockReattemptAfterReview() {
+            currentSession.attemptsRemaining = 0;
+            const wrapper = document.getElementById('resultModalButtonWrapper');
+            if (!wrapper) return;
+            wrapper.innerHTML = `
+                <div class="text-xs text-brand-muted mb-3">This quiz has been locked. Continue tomorrow to retry.</div>
+                <button disabled class="w-full py-3.5 px-4 bg-slate-200 text-slate-600 font-bold rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <span>Locked. Continue tomorrow</span>
+                    <i data-lucide="slash" class="w-4 h-4"></i>
+                </button>
+            `;
+        }
+
+        function openReviewModal() {
+            renderReviewModal();
+            document.getElementById('reviewModal').classList.remove('hidden');
+        }
+
+        function submitFinalSessionConfirmed() {
+            document.getElementById('saveConfirmModal').classList.remove('hidden');
+        }
+
+        function closeSaveConfirmModal() {
+            document.getElementById('saveConfirmModal').classList.add('hidden');
+        }
+
+        function showSessionSavedModal(message) {
+            const messageNode = document.getElementById('sessionSavedMessage');
+            if (messageNode) {
+                messageNode.textContent = message;
+            }
+            document.getElementById('sessionSavedModal').classList.remove('hidden');
+        }
+
+        function closeSessionSavedModal() {
+            document.getElementById('sessionSavedModal').classList.add('hidden');
+            showView('homeView');
+        }
+
+        function confirmSaveSession() {
+            lockReattemptAfterReview();
             const payload = {
                 student_id: currentSession.id,
                 student_name: currentSession.name,
@@ -1141,18 +1627,88 @@
                 latency: currentSession.finalLatency === 0 ? 4.5 : currentSession.finalLatency,
                 efficiency: currentSession.finalEfficiency,
                 accuracy: currentSession.finalAccuracy,
-                path_log: JSON.stringify(answerHistory), 
-                sus_responses: null,  
-                sus_score: 0, 
+                path_log: JSON.stringify(answerHistory),
+                sus_responses: null,
+                sus_score: 0,
                 created_at: new Date().toISOString()
             };
+            closeSaveConfirmModal();
             dispatchSessionPayload(payload, "Session Saved! You have completed today's requirement. Please return tomorrow.");
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.add('hidden');
+            if (shouldLockAfterReview) {
+                openSaveConfirmModal();
+                shouldLockAfterReview = false;
+            }
+        }
+
+        function openSaveConfirmModal() {
+            document.getElementById('saveConfirmModal').classList.remove('hidden');
+        }
+
+        function renderReviewModal() {
+            const content = document.getElementById('reviewModalContent');
+            const accuracy = currentSession.finalAccuracy || 0;
+            const efficiency = currentSession.finalEfficiency || 0;
+            const latency = currentSession.finalLatency || 0;
+            const correctCount = currentSession.optimalSteps || 0;
+            const totalCount = currentSession.steps || answerHistory.length || 0;
+
+            let reviewHtml = `
+                <div class="p-4 rounded-2xl bg-brand-bg border border-brand-mint text-sm space-y-3">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <p class="text-brand-dark font-bold">Accuracy Preview</p>
+                            <p class="text-xs text-brand-muted">Correct decisions vs total steps.</p>
+                        </div>
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 text-brand-accent text-xs font-semibold">${accuracy}%</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-xs text-brand-muted">
+                        <div class="rounded-xl bg-white p-3 border border-brand-mint">
+                            <p class="font-semibold text-brand-dark">Correct Answers</p>
+                            <p>${correctCount} / ${totalCount}</p>
+                        </div>
+                        <div class="rounded-xl bg-white p-3 border border-brand-mint">
+                            <p class="font-semibold text-brand-dark">Path Efficiency</p>
+                            <p>${efficiency}%</p>
+                        </div>
+                        <div class="rounded-xl bg-white p-3 border border-brand-mint col-span-2">
+                            <p class="font-semibold text-brand-dark">Total Latency</p>
+                            <p>${latency}s</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+            `;
+
+            answerHistory.forEach((step, idx) => {
+                const originalQuestion = triageFSM[step.state] || {};
+                const rightOption = originalQuestion.options ? originalQuestion.options.find(o => o.optimal === true) : null;
+                const rightAnswerText = rightOption ? rightOption.text : 'Protocol Specific Action';
+                reviewHtml += `
+                    <div class="p-4 rounded-2xl bg-white border ${step.was_correct ? 'border-brand-accent/20' : 'border-red-100'} shadow-sm">
+                        <div class="flex items-center justify-between gap-3 mb-2 text-xs text-brand-muted">
+                            <span>Step ${idx + 1}</span>
+                            <span class="${step.was_correct ? 'text-brand-accent' : 'text-red-500'} font-bold">${step.was_correct ? 'Correct' : 'Incorrect'}</span>
+                        </div>
+                        <p class="font-semibold text-brand-dark mb-2">${originalQuestion.prompt || 'Review this decision.'}</p>
+                        <p class="text-sm text-brand-dark"><span class="font-bold">Your Answer:</span> ${step.answer_chosen}</p>
+                        <p class="text-sm text-brand-muted"><span class="font-bold">Expected:</span> ${rightAnswerText}</p>
+                        <p class="text-sm text-brand-muted">Time Spent: ${step.time_spent}</p>
+                    </div>
+                `;
+            });
+
+            reviewHtml += `</div>`;
+            content.innerHTML = reviewHtml;
         }
 
         function submitFinalSessionWithSUS() {
             let answers = {};
             let allAnswered = true;
-            
+
             for (let i = 1; i <= 10; i++) {
                 const selected = document.querySelector(`input[name="sus_q_${i}"]:checked`);
                 if (!selected) {
@@ -1161,12 +1717,12 @@
                 }
                 answers[`q${i}`] = parseInt(selected.value);
             }
-            
+
             if (!allAnswered) {
                 alert("Research Requirement: Please answer all 10 System Usability Scale questions before submitting your final data.");
                 return;
             }
-            
+
             let oddSum = (answers.q1 - 1) + (answers.q3 - 1) + (answers.q5 - 1) + (answers.q7 - 1) + (answers.q9 - 1);
             let evenSum = (5 - answers.q2) + (5 - answers.q4) + (5 - answers.q6) + (5 - answers.q8) + (5 - answers.q10);
             let finalSUSMultiplierScore = (oddSum + evenSum) * 2.5;
@@ -1179,10 +1735,10 @@
                 latency: currentSession.finalLatency === 0 ? 4.5 : currentSession.finalLatency,
                 efficiency: currentSession.finalEfficiency,
                 accuracy: currentSession.finalAccuracy,
-                path_log: JSON.stringify(answerHistory), 
-                sus_responses: JSON.stringify(answers),  
+                path_log: JSON.stringify(answerHistory),
+                sus_responses: JSON.stringify(answers),
                 sus_score: finalSUSMultiplierScore,
-                created_at: new Date().toISOString() 
+                created_at: new Date().toISOString()
             };
             dispatchSessionPayload(payload, `Final Protocol Complete!\nYour Final SUS Score: ${finalSUSMultiplierScore}`);
         }
@@ -1197,7 +1753,7 @@
             const toggleFilterBtn = document.getElementById('toggleFilterBtn');
 
             if (filterPanel.style.maxHeight === '0px' || !filterPanel.style.maxHeight) {
-                filterPanel.style.maxHeight = '300px'; 
+                filterPanel.style.maxHeight = '300px';
                 arrowIcon.style.transform = 'rotate(180deg)';
                 toggleFilterBtn.classList.add('border-brand-teal', 'bg-brand-mintLight');
             } else {
@@ -1303,25 +1859,25 @@
                     const id = r.student_id || r.id || 'N/A';
                     const cohort = r.cohort || 'N/A';
                     const scenario = r.scenario || 'Scenario A';
-                    const shortScenario = scenario.split(':')[0]; 
-                    
+                    const shortScenario = scenario.split(':')[0];
+
                     const susDisplay = (r.sus_score && r.sus_score > 0) ? Number(r.sus_score).toFixed(1) : 'N/A';
                     const lat = parseFloat(r.latency).toFixed(2);
                     const acc = parseInt(r.accuracy);
                     const accColor = acc >= 80 ? '#00a887' : '#ef4444';
-                    
+
                     let dateObj = r.created_at ? new Date(r.created_at) : new Date();
                     let dateDisplay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                    
+
                     tbody.innerHTML += `
-                        <tr class="student-row hover:bg-brand-mintLight/50 transition-colors" 
-                            data-id="${id}" 
-                            data-name="${name.toLowerCase()}" 
-                            data-scenario="${scenario}" 
+                        <tr class="student-row hover:bg-brand-mintLight/50 transition-colors"
+                            data-id="${id}"
+                            data-name="${name.toLowerCase()}"
+                            data-scenario="${scenario}"
                             data-latency="${lat}"
                             data-accuracy="${acc}"
                             data-sus="${r.sus_score || 0}">
-                            
+
                             <td class="p-4 font-mono text-brand-teal font-bold">${id}</td>
                             <td class="p-4 font-bold text-brand-dark">${name}</td>
                             <td class="p-4"><span class="bg-brand-bg border border-brand-mint px-3 py-1 rounded-full text-[11px] font-bold text-brand-muted uppercase tracking-wider">${cohort}</span></td>
@@ -1411,6 +1967,7 @@
         window.onload = function() {
             refreshDashboard();
             lucide.createIcons();
+            updateScenarioOptionsByDay();
 
             // Bind listeners for dynamic filters
             document.getElementById('studentSearch').addEventListener('input', processTableFilters);
@@ -1419,4 +1976,5 @@
         }
     </script>
 </body>
+
 </html>
